@@ -1,21 +1,44 @@
-#include "User.c"
-#include "Food.c"
-#include "Refrigerator.c"
+//define recipe struct
+
+//define fridge item struct
 
 int main(void) {
-    User u1 = user_constructor("Martin", 34);
-    Food f1 = food_constructor("Ost", "kg", 42, 0, 010124);
-    Food f2 = food_constructor("Sæd", "l", 69, 0, 060666);
-    //Refrigerator r1 = refrigerator_constructor(42);
-    //add_to_refrigerator(f1);
 
+    //read recipe file
+    //read fridge file
+    //read user config file
 
-    //printf("u1: %s", u1.name);
-
-
-    print_name(u1);
-    print_isVegetarian(f1);
+    while (1)
+    {
+        //ask user for input
+            //print fridge(1)
+            //add item to fridge(2)
+            //remove item from fridge(3)
+            //get recipe from fridge(4)
+            //search for a recipe(5)
+            //write "exit" to exit program
+        //interperet user input and call function based on input
+    }
 
     return 0;
 }
 
+
+read_fridge_from_file(){}
+read_recipes_from_file(){}
+read_user_config_from_file(){}
+
+interperet_user_input(){
+    //read user input
+    //decide what action to take
+}
+
+print_fridge_content(){
+    //format input array to string
+    //output string
+}
+add_fridge_content(){}
+remove_fridge_content(){}
+
+get_recipe_from_list(){}
+search_for_recipe(){}
