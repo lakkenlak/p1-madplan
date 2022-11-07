@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "menu.c"
+
 //define recipe struct
 
 //define fridge item struct
@@ -8,22 +12,12 @@ int main(void) {
     //read fridge file
     //read user config file
 
-    while (1)
-    {
-        //ask user for input
-            //print fridge(1)
-            //add item to fridge(2)
-            //remove item from fridge(3)
-            //get recipe from fridge(4)
-            //search for a recipe(5)
-            //write "exit" to exit program
-        //interperet user input and call function based on input
-    }
+    print_main_menu();
 
     return 0;
 }
 
-
+/*
 read_fridge_from_file(){}
 read_recipes_from_file(){}
 read_user_config_from_file(){}
@@ -42,3 +36,4 @@ remove_fridge_content(){}
 
 get_recipe_from_list(){}
 search_for_recipe(){}
+ */
