@@ -8,31 +8,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <Food.c>
 
-#define "filename" // filename has to b
+void main(void){
 
-// very cool algoritm to copy a file list to an array
-    
-void copy_fridge_content (){
-    char filename[20];
-     *myFile;
-    int array[N];
-    int k;
+    FOOD food; //struct array?
+    char recipe_matches[];
+    char recipe_list[N];
+    int N;
 
-    myFile = fopen(filename); // input fridgelist name 
+    search_recipe_from_fridge(recipe_matches, food, recipe_list, N,  );
 
-    /* indlæs fil ind i array */
-    for (k = 0; k < N; k++){
-        fscanf(myFile, "%s", &array[k]); // scan in fridge content
-    }
-    fclose(myFile);
 
 
 }
 
-
 // LinSearch to modify
-void LinSearch(char recipe_matches[], char fridge_list[], char recipe_list[], int lengt_of_recipe_list  ){
+void search_recipe_from_fridge (char recipe_matches[], char fridge_list[], char recipe_list[], int lengt_of_recipe_list  ){
   
   int f = 0;
   int r = 0;
@@ -49,24 +41,19 @@ void LinSearch(char recipe_matches[], char fridge_list[], char recipe_list[], in
         // find out how to access structs elements individually
 
         if (fridge_item_name[f] == recipe_item_name[r]){
-            int f = f;
-            int r = r;
+            char f = f;
+            char r = r;
             int i = 1
             recipe_name = recipe_list[r-1];
 
-        if (fridge_item_name[f + i] == recipe_item_name[r + i])
+        if (fridge_item_name[f + i] == recipe_item_name[r + i]){
+
+        }
             
         }
 
-        //return recipe array
+        //return recipe_matches array[]
         
     }
-
-}
-void search_recipe(fridge_item_name[i] == recipe_item_name[r]){
-    int i = i;
-    int r = r;
-    if (fridge_item:name)
-
 
 }
