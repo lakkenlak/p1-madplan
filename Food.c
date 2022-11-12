@@ -4,10 +4,10 @@ typedef struct {
     double CO2_emission;
     unsigned int isVegetarian;
     unsigned int expiration_date;
-} Food;
+} FOOD;
 
 
-Food food_constructor(char name[], char unit[], double CO2_emission, unsigned short isVegetarian, unsigned int expiration_date){
+FOOD food_constructor(char name[], char unit[], double CO2_emission, unsigned short isVegetarian, unsigned int expiration_date){
     Food food;
     strcpy(food.name,name);
     strcpy(food.unit,unit);
