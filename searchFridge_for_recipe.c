@@ -31,38 +31,8 @@ void copy_fridge_content (){
 }
 
 
-//BinSearch to modify 
-void BinSearch(char fridge_list[], char recipe_list[], int lengt_of_recipe_list ){
-  
-  int m;
-  int l = lengt_of_recipe_list;
-  int f = 
-  char fridge_item_name = fridge_list[];
-  char recipe_item_name = recipe_list[];
-  
-  
-    while (i < l){
-        
-        m = ((i+l)/ 2);
-        
-        if (x > array [m]){
-            i = m + 1;
-        }
-        else {
-            l = m;
-        }    
-        if (x == array[i]){
-            printf("%d er på position %d\n",x,i+1);
-        }
-        else {
-            printf("%d er ikke i listen \n",x);
-        }
-
-    }
-}
-
 // LinSearch to modify
-void LinSearch(char fridge_list[], char recipe_list[], int lengt_of_recipe_list  ){
+void LinSearch(char recipe_matches[], char fridge_list[], char recipe_list[], int lengt_of_recipe_list  ){
   
   int f = 0;
   int r = 0;
