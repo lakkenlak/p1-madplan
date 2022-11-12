@@ -39,7 +39,7 @@ void search_recipe_from_fridge (FOOD_LIST food, char recipe_list[], int lengt_of
             char f = f;
             char r = r;
             int i = 1
-            recipe_matches[] = recipe_list[recipe_list.name];
+            recipe_matches[] = recipe_list.name;
 
             while (fridge_item_name[f + i] == recipe_item_name[r + i]){
                 i++;

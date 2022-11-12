@@ -1,8 +1,12 @@
 .idea
 CMakeLists.txt
 SearchFunc.c 
+<<<<<<< HEAD
 SearchFuncAlternative.c 
 food.c 
 main.c 
 menu.c 
 read_file_to_array.c
+=======
+SearchFuncAlternative.c 
+>>>>>>> 9a3a49cb3a8878efa7bb32bcc61ff850ded1f361
