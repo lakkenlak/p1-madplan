@@ -15,7 +15,7 @@
     
 void copy_fridge_content (){
     char filename[20];
-    FILE *myFile;
+     *myFile;
     int array[N];
     int k;
 
@@ -32,45 +32,71 @@ void copy_fridge_content (){
 
 
 //BinSearch to modify 
-void BinSearch(int array[], int n, int x, int print){
-  int i = 1;
-  int j = n;
-  int m; 
-  /* Fyld ind hvad der mangler her */
+void BinSearch(char fridge_list[], char recipe_list[], int lengt_of_recipe_list ){
   
-  while (i < j){
-      
-      m = ((i+j)/ 2);
-      
-      if (x > array [m]){
-        i = m + 1;
-      }
-      else {
-        j = m;
-      }    
-      if (x == array[i]){
-         printf("%d er på position %d\n",x,i+1);
-      }
-      else {
-         printf("%d er ikke i listen \n",x);
-      }
+  int m;
+  int l = lengt_of_recipe_list;
+  int f = 
+  char fridge_item_name = fridge_list[];
+  char recipe_item_name = recipe_list[];
+  
+  
+    while (i < l){
+        
+        m = ((i+l)/ 2);
+        
+        if (x > array [m]){
+            i = m + 1;
+        }
+        else {
+            l = m;
+        }    
+        if (x == array[i]){
+            printf("%d er på position %d\n",x,i+1);
+        }
+        else {
+            printf("%d er ikke i listen \n",x);
+        }
 
+    }
 }
 
 // LinSearch to modify
-void LinSearch(int array[], int n, int x, int print){
-  int i = 1;
+void LinSearch(char fridge_list[], char recipe_list[], int lengt_of_recipe_list  ){
   
-  while (i <= n && x != array[i]) {
-      i++;
-  }
+  int f = 0;
+  int r = 0;
+  char fridge_item_name = fridge_list[i];
+  char recipe_item_name = recipe_list[r];
+  char recipe_name;
+  char recipe_matches[];
 
-  if (print == 1){
-    if (x == array[i]){
-      printf("%d er på position %d\n",x,i+1);
+
+    while (r != lengt_of_recipe_list) {
+        r++;
+        f++;
+        // firs compare first element, then compare second, compare third etc...
+        // find out how to access structs elements individually
+
+        if (fridge_item_name[f] == recipe_item_name[r]){
+            int f = f;
+            int r = r;
+            int i = 1
+            recipe_name = recipe_list[r-1];
+
+        if (fridge_item_name[f + i] == recipe_item_name[r + i])
+            
+        }
+
+        //return recipe array
+        
     }
-    else {
-      printf("%d er ikke i listen \n",x);
-    }
-  }
+
+}
+void search_recipe(fridge_item_name[i] == recipe_item_name[r]){
+    int i = i;
+    int r = r;
+    if (fridge_item:name)
+
+
 }
