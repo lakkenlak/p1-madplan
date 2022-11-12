@@ -12,26 +12,25 @@
 
 void main(void){
 
-    FOOD food; //struct array?
+    FOOD *food; //struct array?
     char recipe_matches[];
     char recipe_list[N];
     int N;
 
-    search_recipe_from_fridge(recipe_matches, food, recipe_list, N,  );
-
-
+    search_recipe_from_fridge(recipe_matches, *food, recipe_list, N,  );
 
 }
 
 // LinSearch to modify
-void search_recipe_from_fridge (char recipe_matches[], char fridge_list[], char recipe_list[], int lengt_of_recipe_list  ){
+void search_recipe_from_fridge (char recipe_matches[], FOOD *food, char recipe_list[], int lengt_of_recipe_list  ){
   
   int f = 0;
   int r = 0;
-  char fridge_item_name = fridge_list[i];
+  char fridge_item_name = (*food.name);
   char recipe_item_name = recipe_list[r];
+  char recipe_matches[]; //output array
   char recipe_name;
-  char recipe_matches[];
+
 
 
     while (r != lengt_of_recipe_list) {
@@ -46,9 +45,10 @@ void search_recipe_from_fridge (char recipe_matches[], char fridge_list[], char 
             int i = 1
             recipe_name = recipe_list[r-1];
 
-        if (fridge_item_name[f + i] == recipe_item_name[r + i]){
+            while (fridge_item_name[f + i] == recipe_item_name[r + i]){
+                i++;
 
-        }
+            }
             
         }
 
