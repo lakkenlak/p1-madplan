@@ -12,38 +12,34 @@
 
 void main(void){
 
-    FOOD *food; //struct array?
-    char recipe_matches[];
-    char recipe_list[N];
+    FOOD_LIST food; //struct array?
+    RECIPE_LIST [N];
     int N;
 
-    search_recipe_from_fridge(recipe_matches, *food, recipe_list, N,  );
+    search_recipe_from_fridge(food, recipe_list, N );
 
 }
 
 // LinSearch to modify
-void search_recipe_from_fridge (char recipe_matches[], FOOD *food, char recipe_list[], int lengt_of_recipe_list  ){
+void search_recipe_from_fridge (FOOD_LIST food, char recipe_list[], int lengt_of_recipe_list  ){
   
   int f = 0;
   int r = 0;
-  char fridge_item_name = (*food.name);
-  char recipe_item_name = recipe_list[r];
-  char recipe_matches[]; //output array
-  char recipe_name;
-
-
+  char fridge_item_name = food.name;
+  char recipe_item_name = recipe_list.name;
+  char recipe_matches[]; //output array to print
 
     while (r != lengt_of_recipe_list) {
         r++;
         f++;
-        // firs compare first element, then compare second, compare third etc...
+        // first compare first element, then compare second, compare third etc...
         // find out how to access structs elements individually
 
         if (fridge_item_name[f] == recipe_item_name[r]){
             char f = f;
             char r = r;
             int i = 1
-            recipe_name = recipe_list[r-1];
+            recipe_matches[] = recipe_list[recipe_list.name];
 
             while (fridge_item_name[f + i] == recipe_item_name[r + i]){
                 i++;

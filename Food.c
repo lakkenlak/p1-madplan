@@ -4,11 +4,11 @@ typedef struct {
     double CO2_emission;
     unsigned int isVegetarian;
     unsigned int expiration_date;
-} FOOD;
+} FOOD_LIST;
 
 
-FOOD food_constructor(char name[], char unit[], double CO2_emission, unsigned short isVegetarian, unsigned int expiration_date){
-    FOOD food;
+FOOD_LIST food_constructor(char name[], char unit[], double CO2_emission, unsigned short isVegetarian, unsigned int expiration_date){
+    FOOD_LIST food;
     strcpy(food.name,name);
     strcpy(food.unit,unit);
     food.CO2_emission = CO2_emission;
@@ -18,11 +18,11 @@ FOOD food_constructor(char name[], char unit[], double CO2_emission, unsigned sh
     return food;
 }
 
-void print_food_name(Food food){
+void print_food_name(FOOD_LIST food){
     printf("%s\n", food.name);
 }
 
-void print_isVegetarian(Food food){
+void print_isVegetarian(FOOD_LIST food){
     if(food.isVegetarian == 1)
         printf("%s is vegetarian", food.name);
     else

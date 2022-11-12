@@ -5,3 +5,4 @@ SearchFuncAlternative.c
 food.c 
 main.c 
 menu.c 
+read_file_to_array.c
