@@ -8,21 +8,21 @@ typedef struct {
 
 
 FOOD food_constructor(char name[], char unit[], double CO2_emission, unsigned short isVegetarian, unsigned int expiration_date){
-    Food food;
+    FOOD food;
     strcpy(food.name,name);
     strcpy(food.unit,unit);
     food.CO2_emission = CO2_emission;
     food.isVegetarian = isVegetarian;
     food.expiration_date = expiration_date;
 
-    return food;
+    return FOOD;
 }
 
-void print_food_name(Food food){
+void print_food_name(FOOD food){
     printf("%s\n", food.name);
 }
 
-void print_isVegetarian(Food food){
+void print_isVegetarian(FOOD food){
     if(food.isVegetarian == 1)
         printf("%s is vegetarian", food.name);
     else

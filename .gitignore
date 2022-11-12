@@ -2,6 +2,3 @@
 CMakeLists.txt
 SearchFunc.c 
 SearchFuncAlternative.c 
-food.c 
-main.c 
-menu.c 
