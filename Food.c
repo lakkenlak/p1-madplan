@@ -15,7 +15,7 @@ FOOD food_constructor(char name[], char unit[], double CO2_emission, unsigned sh
     food.isVegetarian = isVegetarian;
     food.expiration_date = expiration_date;
 
-    return FOOD;
+    return food;
 }
 
 void print_food_name(Food food){
