@@ -2,4 +2,4 @@
 CMakeLists.txt
 SearchFunc.c 
 SearchFuncAlternative.c 
-read_file_to_array.c
+

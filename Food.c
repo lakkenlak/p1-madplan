@@ -1,4 +1,4 @@
-typedef struct {
+typedef struct FOOD_LIST {
     char name[20];
     char unit[5];
     double CO2_emission;
@@ -15,7 +15,7 @@ FOOD_LIST food_constructor(char name[], char unit[], double CO2_emission, unsign
     food.isVegetarian = isVegetarian;
     food.expiration_date = expiration_date;
 
-    return FOOD;
+    return food;
 }
 
 void print_food_name(FOOD_LIST food){
