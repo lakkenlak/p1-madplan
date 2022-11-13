@@ -10,13 +10,13 @@
 #include <math.h>
 #include <Food.c>
 
-void search_recipe_from_fridge (const FOOD_LIST fridge[],
+int search_recipe_from_fridge (const FOOD_LIST fridge[],
                                 const RECIPE_LIST recipe[], 
                                 int recipe_list_size, 
                                 int number_of_fridge_values, 
                                 int number_of_recipe_values);
 
-void main(void){
+int main(void){
 
     
     int N;
@@ -26,50 +26,56 @@ void main(void){
 }
 
 // LinSearch to modify
-void search_recipe_from_fridge (const FOOD_LIST fridge[],
+int search_recipe_from_fridge (const FOOD_LIST fridge[],
                                 const RECIPE_LIST recipe[], 
                                 int recipe_list_size, 
                                 int number_of_fridge_values, 
                                 int number_of_recipe_values){
   
     char matches[100];
-    char match;
     int NR = number_of_recipe_values;
     int NF = number_of_fridge_values;
     int r = 0; //recipe index
     int f = 0; //fridge index
+    int m = 0; //matches index
+    int i = 0;
     int found = 1;
-    int status = 0; // status on number of values found true
+    int status = 0; //number of food values found true
         
-        // compare components of fridge structure and recipe structure       
-        while (!found && r <= recipe_list_size){
- 
-            if (fridge[f].name == recipe[r].item){
-                status = 1;
-                match = recipe[r].name;
-
-                    while (f != NF){
-                        if (fridge[f++].name == recipe[r].item[++] ){
+        // compare values of fridge struct and recipe struct      
+        while (r <= recipe_list_size){
+            //find first match before comparing whole recipe
+            if (fridge[f].name == recipe[r].item[i]){    
+                //compare all fridge elements to all recipe values, linear search, has to be sorted
+                for (f = 0; f <= NF || i <= NR;){
+                    if (fridge[f].name == recipe[r].item[i]){
                         status++;
+                        i++;
                         f++;
-
-                        else 
-                            status = 0;
-                        }
-
+                        //if all fridge content is found then recipe is stored in matches
                         if (status == NF){
-                            matches[] = match;
+                            matches[m] = recipe[r].name;
+                            m++;
                         }
+                    else 
+                        i++;
+                    }  
+
+                    else if(){
+
                     }
+                }
             }
 
-           
+            recipe[r++]; //iterate to next array structure
+            status = 0; //reset status to 0
         }
-             // recipe[r++]; //iterate to next structure
+     
 
-            //print recipe_matches array[]
-            printf("This is the list", matches)
-    return main;
+    //print result
+    printf("This is the list", matches)
+    
+    return 0
 }
 
 // String compare method??? 
