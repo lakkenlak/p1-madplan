@@ -24,11 +24,10 @@ typedef struct MATCHES {
 
 int search_recipe_from_fridge (const FOOD_LIST fridge[],
                                 const RECIPE_LIST recipe[],
-                                const MATCHES matches[]; 
                                 int recipe_list_size, 
                                 int number_of_fridge_values, 
                                 int number_of_recipe_values){
-
+MATCHES matches[m];
 char found_foods[50];
 int NR = number_of_recipe_values;
 int NF = number_of_fridge_values;

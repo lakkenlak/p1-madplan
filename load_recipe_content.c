@@ -1,52 +1,31 @@
 // make recipe struct 
+#include <stdio.h>
+#include <string.h>
+#include <FRIDGE_LIST.h>
 
-
+#DEFINE 
         // FOUND THESE READ/COPY STRUCT ARRAY FILE ALGORITM IN IMPR-C BOOK
         // COULD MODIFY TO READ STRUCT
-/*
- * Gets data from a file to fill output argument
- * Returns standard error code: 1 => successful input, 0 => error,
- * negative EOF value => end of file
- */
 
-int fscan_unit (FILE *filep, /* input - input file pointer */
-                unit_t *unitp) /* output - unit_t structure to fill */
-                {
-    int status;
-
-    status = fscanf(filep, "%s%s%s%lf", unitp->name,
-                    unitp->abbrev,
-                    unitp->class,
-                    &unitp->standard);
-
-        if (status == 4)
-            status = 1;
-        else if (status != EOF)
-            status = 0;
-
-    return (status);
-}
 /*
 * Opens database file units.txt and gets data to place in units until end
 * of file is encountered. Stops input prematurely if there are more than
 * unit_max data values in the file or if invalid data is encountered.
 */
-void load_units(int unit_max, /* input - declared size of units */
-                unit_t units[], /* output - array of data */
-                int *unit_sizep) /* output - number of data values
-stored in units */
+void load_units(FRIDGE_LIST fridge[], /* output - array of data */
+                int *fridge_element_size) /* output - number of data values stored in elements */
                 {
 
     FILE * inp;
-    unit_t data;
+    FRIDGE_LIST data;
     int i, status;
 
     /* Gets database of units from file */
-    inp = fopen("units.txt", "r");
+    inp = fopen("fridge.list", "r");
     i = 0;
 
         for (status = fscan_unit(inp, &data); 
-             status == 1 && i < unit_max; 
+             status == 1; 
              status = fscan_unit(inp, &data)) {
                 
             units[i++] = data;
@@ -67,4 +46,27 @@ stored in units */
 
     /* Send back size of used portion of array */
     *unit_sizep = i;
+}
+/*
+ * Gets data from a file to fill output argument
+ * Returns standard error code: 1 => successful input, 0 => error,
+ * negative EOF value => end of file
+ */
+
+int fscan_unit (FILE *filep, /* input - input file pointer */
+                FRIDGE_LIST *unitp) /* output - unit_t structure to fill */
+                {
+    int status;
+
+    status = fscanf(filep, "%s%s%s%lf", unitp->name,
+                                        unitp->abbrev,
+                                        unitp->class,
+                                        &unitp->standard);
+
+        if (status == 4)
+            status = 1;
+        else if (status != EOF)
+            status = 0;
+
+    return (status);
 }

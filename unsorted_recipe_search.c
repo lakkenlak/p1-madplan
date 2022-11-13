@@ -18,18 +18,19 @@ typedef struct RECIPE_LIST{
 
 typedef struct MATCHES {
 
+    char recipe_matches[50];
 
 } MATCHES;
 
 
-int search_recipe_from_fridge (const FOOD_LIST fridge[],
-                                const RECIPE_LIST recipe[],
-                                const MATCHES matches[]; 
+void search_recipe_from_fridge (const FOOD_LIST fridge[],
+                                const RECIPE_LIST recipe[], 
                                 int recipe_list_size, 
                                 int number_of_fridge_values, 
                                 int number_of_recipe_values){
 
-char found_foods[50];
+MATCHES matches;
+char found_foods[25];
 int NR = number_of_recipe_values;
 int NF = number_of_fridge_values;
 int r = 0; //recipe index
@@ -38,7 +39,10 @@ int m = 0; //matches index
 int i; // recipe item index
 int status = 0; //number of food values found true
     
-        //More generalised, maybe an algoritm for unsorted list, slower I think 
+       //call to load fridge and recipe content directly from file ??
+        
+        
+        //More generalised algoritm
         while (r <= recipe_list_size){
                 
                 for (f = 0; f <= NF; f++ ){    
@@ -49,7 +53,7 @@ int status = 0; //number of food values found true
                             status++;
                             i++;
                             f++;
-                            printf("Matched a food! %s\n", recipe[r].item[i]); //for testing output
+                            printf("Matched a food! %s \n", *recipe[r].item[i]); //for testing output
 
                             //if all fridge content is found or more than 5 values, then recipe is stored in matches and exit loop
                             if (status > 5){
@@ -58,21 +62,20 @@ int status = 0; //number of food values found true
                                 exit;
                             }
                         else    
-                            i++
+                            i++;
                         }
                     
                     }while (i <= NR);
                 
                 } 
 
-            recipe[r++]; //iterate to next array structure
+            recipe[r++]; //iterate to next structure element
             status = 0; //reset status to 0
             f = 0;
         }
     //print result
-    printf("This is the list of recipes you can choose from %s\n", matches) // printing a struct??????
+    printf("This is the list of recipes you can choose from: %s\n", matches) // printing a struct??????
 
-    return 0
 }
 
 // String compare method??? 
