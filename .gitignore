@@ -2,4 +2,3 @@
 CMakeLists.txt
 SearchFunc.c 
 SearchFuncAlternative.c 
-
