@@ -1,16 +1,14 @@
 // make recipe struct 
 #include <stdio.h>
 #include <string.h>
-#include <FRIDGE_LIST.h>
 
 #DEFINE 
         // FOUND THESE READ/COPY STRUCT ARRAY FILE ALGORITM IN IMPR-C BOOK
         // COULD MODIFY TO READ STRUCT
 
 /*
-* Opens database file units.txt and gets data to place in units until end
-* of file is encountered. Stops input prematurely if there are more than
-* unit_max data values in the file or if invalid data is encountered.
+* Opens database file and gets data to place in units until end
+* of file is encountered.
 */
 void load_units(FRIDGE_LIST fridge[], /* output - array of data */
                 int *fridge_element_size) /* output - number of data values stored in elements */
@@ -21,7 +19,7 @@ void load_units(FRIDGE_LIST fridge[], /* output - array of data */
     int i, status;
 
     /* Gets database of units from file */
-    inp = fopen("fridge.list", "r");
+    inp = fopen("fridge.csv", "r");
     i = 0;
 
         for (status = fscan_unit(inp, &data); 
@@ -59,7 +57,7 @@ int fscan_unit (FILE *filep, /* input - input file pointer */
     int status;
 
     status = fscanf(filep, "%s%s%s%lf", unitp->name,
-                                        unitp->abbrev,
+                                        unitp->weight,
                                         unitp->class,
                                         &unitp->standard);
 
