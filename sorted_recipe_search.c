@@ -51,13 +51,12 @@ int status = 0; //number of food values found true
                             found_foods[] = recipe[r].item[i];
                             printf("Matched a food! %s\n", recipe[r].item[i]);
 
-                                //if all fridge content is found or more than 5 then recipe is stored in matches
-                                if (status > 5){
-                                    matches[m] = recipe[r];
-                                    m++;
-                                }
                         }
-
+                        //if all fridge content is found or more than 5 then recipe is stored in matches
+                        if (status > 5){
+                            matches[m] = recipe[r];
+                            m++;
+                        }
                     }
                     
                 }

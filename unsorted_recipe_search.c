@@ -10,60 +10,69 @@
 #include <math.h>
 #include <Food.c>
 
-typedef struct FOOD_LIST {
-    char name[20];
-    char unit[5];
+#define MAX_FOODS 25 // maximum number of food items
+#define MAX_RECIPES 20000
+
+
+typedef struct fridge_item {
+    char name[50];
+    char unit[10];
     double CO2_emission;
     unsigned int isVegetarian;
     unsigned int expiration_date;
-} FOOD_LIST;
+} fridge_item_t;
 
-typedef struct RECIPE_LIST{
-    
-    char item[30];
-
-} RECIPE_LIST;
-
-
-typedef struct MATCHES {
-
-    char recipe_matches[50];
-
-} MATCHES;
+typedef struct recipe{ 
+    char name[30];
+    char item2[30];
+    char item3[30];
+    char item4[30];
+} recipe_t;
 
 
-void search_recipe_from_fridge (const FOOD_LIST fridge[],
-                                const RECIPE_LIST recipe[], 
-                                int recipe_list_size, 
-                                int number_of_fridge_values, 
-                                int number_of_recipe_values){
-FOOD_LIST fridge;
-RECIPE_LIST recipe;
-MATCHES matches;
-char found_foods[25];
-int NR = number_of_recipe_values;
-int NF = number_of_fridge_values;
-int r = 0; //recipe index
-int f = 0; //fridge index
+void load_fridge(int MAX_FOODS, fridge_item_t fridge[], int *unit_sizep);
+void load_recipe(int MAX_RECIPE, recipe_t recipe[], &fridge_list_size, &recipe_list_size);
+void search_recipe_from_fridge (fridge_item_t fridge[], recipe_t recipe[], int recipe_list_size,int fridge_list_size);
+
+
+// MAIN 
+
+void main (void){
+
+    fridge_item_t fridge[MAX_FOODS];
+    recipe_t recipe[MAX_RECIPES];
+    int recipe_list_size,
+        fridge_list_size;
+
+    load_fridge(MAX_FOODS, fridge, &fridge_list_size);
+    load_recipe(MAX_RECIPE, recipe, &recipe_list_size);
+
+    search_recipe_from_fridge( fridge, recipe, recipe_list_size, fridge_list_size);
+}
+
+
+void search_recipe_from_fridge (fridge_item_t fridge[],
+                                    recipe_t recipe[], 
+                                    int recipe_list_size, 
+                                    int fridge_list_size){
+
+recipe_t matches[50];
+char found_foods[MAX_FOODS];
 int m = 0; //matches index
-int i; // recipe item index
 int status = 0; //number of food values found true
-    
-       //call to load fridge and recipe content directly from file ??
-        
-        
+       
         //More generalised algoritm
-        while (r <= recipe_list_size){
+        while (int r <= recipe_list_size){
                 
-                for (f = 0; f <= NF; f++ ){    
+                for (int f = 0; f <= fridge_list_size; f++ ){    
                     i = 0;//reset iteration variable
                     do {
-                        if (fridge[f].name == recipe[r].item[i]){
-                            found_foods[status] = recipe[r].item[i];
+                        if (fridge[f]->name == recipe[r]->item[i]){
+                            found_foods[status] = recipe[r]->item[i];
                             status++;
                             i++;
                             f++;
-                            printf("Matched a food! %s \n", recipe[r].item[i]); //for testing output
+                            printf("Matched a food! %s \n", recipe[r]->item[i]); //for testing output
 
                         else    
                             i++;
@@ -76,7 +85,7 @@ int status = 0; //number of food values found true
                             break;
                         }
                     
-                    }while (i <= NR);
+                    }while (i <= /*recipe element members)*/);
                 
                 } 
 
@@ -85,15 +94,65 @@ int status = 0; //number of food values found true
             f = 0; // reset fridge list for new recipe search
         }
     //print result
-    printf("From the matched food, this is the list of recipes you can choose from: %s\n", matches) // printing a struct??????
+    printf("From the matched food: %s\n
+            This is is the list of recipes you can choose from: %s\n", found_foods, matches) // printing structs??????
 
 }
 
-// String compare method??? 
-// /*Compare name and abbrev components of each element to target */
-//     i = 0;
-//     while (!found && i < n) {
-//         if (strcmp(fridge[i].name, recipe[i]) == 0)
-//             found = 1;
-//         else
-//             ++i;
+/*
+* Opens database file and gets data to place in units until end
+* of file is encountered. 
+*/
+void load_fridge(int MAX_FOODS,
+                fridge_item_t fridge[], /* output - array of data */
+                int *unit_sizep) /* output - number of data values stored in units */
+                {
+
+    FILE * inp;
+    fridge_item_t data;
+    int i, status;
+
+    /* Gets database of units from file */
+    inp = fopen("fridge.txt", "r");
+    i = 0;
+
+        for (status = fscan_fridge(inp, &data); 
+             status == 1 && i < unit_max; 
+             status = fscan_fridge(inp, &data)) {
+                
+            fridge[i++] = data;
+        }
+        
+    fclose(inp);
+
+/* Issue error message on premature exit */
+        if (status == 0) {
+            printf("\n*** Error in data format ***\n");
+            printf("*** Using first %d data values ***\n", i);
+        } 
+        
+        else if (status != EOF) {
+            printf("\n*** Error: too much data in file ***\n");
+            printf("*** Using first %d data values ***\n", i);
+        }
+
+    /* Send back size of used portion of array */
+    *unit_sizep = i;
+}
+int fscan_fridge(FILE *filep, /* input - input file pointer */
+                unit_t *unitp) /* output - unit_t structure to fill */
+                {
+    int status;
+
+    status = fscanf(filep, "%s%s%s%lf", unitp->name,
+                                        unitp->abbrev,
+                                        unitp->class,
+                                        &unitp->standard);
+
+        if (status == 4)
+            status = 1;
+        else if (status != EOF)
+            status = 0;
+
+    return (status);
+}

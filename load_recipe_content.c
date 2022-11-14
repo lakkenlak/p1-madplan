@@ -1,32 +1,27 @@
-// make recipe struct 
-#include <stdio.h>
-#include <string.h>
 
-#DEFINE 
-        // FOUND THESE READ/COPY STRUCT ARRAY FILE ALGORITM IN IMPR-C BOOK
-        // COULD MODIFY TO READ STRUCT
 
-/*
-* Opens database file and gets data to place in units until end
-* of file is encountered.
-*/
-void load_units(FRIDGE_LIST fridge[], /* output - array of data */
-                int *fridge_element_size) /* output - number of data values stored in elements */
+// the call
+
+load_recipe(MAX_RECIPE, recipe, &recipe_list_size);
+
+void load_recipe(int MAX_recipe,
+                recipe_t recipe[], /* output - array of data */
+                int *recipe_list_size) /* output - number of data values stored in units */
                 {
 
     FILE * inp;
-    FRIDGE_LIST data;
+    recipe_t data;
     int i, status;
 
     /* Gets database of units from file */
-    inp = fopen("fridge.csv", "r");
+    inp = fopen("recipe.txt", "r");
     i = 0;
 
-        for (status = fscan_unit(inp, &data); 
-             status == 1; 
-             status = fscan_unit(inp, &data)) {
+        for (status = fscan_recipe(inp, &data); 
+             status == 1 && i < MAX_recipe; 
+             status = fscan_recipe(inp, &data)) {
                 
-            units[i++] = data;
+            recipe[i++] = data;
         }
         
     fclose(inp);
@@ -43,21 +38,15 @@ void load_units(FRIDGE_LIST fridge[], /* output - array of data */
         }
 
     /* Send back size of used portion of array */
-    *unit_sizep = i;
+    *recipe_list_size = i;
 }
-/*
- * Gets data from a file to fill output argument
- * Returns standard error code: 1 => successful input, 0 => error,
- * negative EOF value => end of file
- */
-
-int fscan_unit (FILE *filep, /* input - input file pointer */
-                FRIDGE_LIST *unitp) /* output - unit_t structure to fill */
+int fscan_fridge(FILE *filep, /* input - input file pointer */
+                unit_t *unitp) /* output - unit_t structure to fill */
                 {
     int status;
 
     status = fscanf(filep, "%s%s%s%lf", unitp->name,
-                                        unitp->weight,
+                                        unitp->abbrev,
                                         unitp->class,
                                         &unitp->standard);
 
@@ -68,3 +57,4 @@ int fscan_unit (FILE *filep, /* input - input file pointer */
 
     return (status);
 }
+
