@@ -1,3 +1,4 @@
 .idea
-CMakeLists.txt
-./a.out
+CMakeLists.txt*
+*.out
+*.exe
