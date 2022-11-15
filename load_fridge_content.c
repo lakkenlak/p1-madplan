@@ -1,4 +1,13 @@
+#include <stdio.h>
+#include <stdlib.h>
 
+typedef struct fridge_item_t {
+    char name[50];
+    char unit[10];
+    double CO2_emission;
+    unsigned int isVegetarian;
+    unsigned int expiration_date;
+} fridge_item_t;
 
 // the call
 load_fridge(MAX_FOODS, fridge, &number_of_fridge_elements);
@@ -10,19 +19,23 @@ void load_fridge(int MAX_FOODS,
                 {
 
     FILE * inp;
-    fridge_item_t data;
+    fridge_item_t fridge_data;
     int i, status;
 
     /* Gets database of units from file */
     inp = fopen("fridge.txt", "r");
     i = 0;
 
-        for (status = fscan_fridge(inp, &data); 
-             status == 1 && i < MAX_FOODS; 
-             status = fscan_fridge(inp, &data)) {
-                
-            fridge[i++] = data;
+        if (inp == NULL){
+            printf("could not load file\n");
+            return;
         }
+            for (status = fscan_fridge(inp, &fridge_data); 
+                status == 1 && i < MAX_FOODS; 
+                status = fscan_fridge(inp, &fridge_data)) {
+                    
+                fridge[i++] = fridge_data;
+            }
         
     fclose(inp);
 
@@ -41,14 +54,14 @@ void load_fridge(int MAX_FOODS,
     *fridge_list_size = i;
 }
 int fscan_fridge(FILE *filep, /* input - input file pointer */
-                unit_t *unitp) /* output - unit_t structure to fill */
+                fridge_item_t *fridge_data) /* output - structure to fill */
                 {
     int status;
 
-    status = fscanf(filep, "%s%s%s%lf", unitp->name,
-                                        unitp->abbrev,
-                                        unitp->class,
-                                        &unitp->standard);
+    status = fscanf(filep, "%s%s%lf",fridge_data->name,
+                                     fridge_data->unit,
+                                     fridge_data->CO2-emission,
+                                    &fridge_data->standard);
 
         if (status == 4)
             status = 1;
