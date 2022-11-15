@@ -10,7 +10,7 @@ typedef struct recipe_ingredient_t{
 
 typedef struct recipe_t { 
     char *name;
-    recipe_ingredient_t *items; //ingredients struct array nested
+    struct recipe_ingredient_t *item; //ingredients struct array nested
     char *instructions;
 } recipe_t;
 

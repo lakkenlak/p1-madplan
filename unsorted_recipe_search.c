@@ -26,6 +26,7 @@ typedef struct fridge_item_t {
 typedef struct recipe_item_t{
     char name[NAME_LEN];
     char unit[10];
+    double amount;
     double CO2_emission;
     unsigned int isVegetarian;
     unsigned int expiration_date;
@@ -33,12 +34,12 @@ typedef struct recipe_item_t{
 
 typedef struct recipe_t { 
     char name[NAME_LEN];
-    struct recipe_item_t item[]; //ingredients struct array nested
+    struct recipe_item_t *item[MAX_RECIPE_ITEMS]; /* maybe malloc(some size?) - ingredients nested struct array*/
    
 } recipe_t;
 
 void load_fridge(int MAX_FOODS, fridge_item_t fridge[], int *fridge_list_size);
-void load_recipe(int MAX_RECIPE, recipe_t recipe[], &recipe_list_size);
+void load_recipe(int MAX_RECIPE, recipe_t recipe[], *recipe_list_size);
 void search_recipe_from_fridge (fridge_item_t fridge[], recipe_t recipe[], int recipe_list_size,int fridge_list_size);
 
 
@@ -47,7 +48,7 @@ void search_recipe_from_fridge (fridge_item_t fridge[], recipe_t recipe[], int r
 void main (void){
 
     fridge_item_t fridge[MAX_FOODS]; 
-    recipe_t recipe[MAX_RECIPES]; //maybe a malloc variable memory here????
+    recipe_t* recipe = malloc(sizeof(struct recipe_t) + /*SOME SIZE ???? */);
     int recipe_list_size,                                                                  
         fridge_list_size;
 
