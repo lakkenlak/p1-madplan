@@ -1,0 +1,59 @@
+[
+    {
+        "name": "banan smoothie",
+        "url": "https://kristineskitchenblog.com/banana-smoothie/",
+        "ingredients": [
+            {
+                "name": "Banan",
+                "amount": 1,
+                "unit": "pcs"
+            },
+            {
+                "name": "Yogurt",
+                "amount": 2,
+                "unit": "dl"
+            },
+            {
+                "name": "Mælk",
+                "amount": 3,
+                "unit": "dl"
+            }
+        ]
+    },
+    {
+        "name": "Tiramisu",
+        "url": "https://www.arla.dk/opskrifter/tiramisu/",
+        "ingredients": [
+            {
+                "name": "Æggehvider",
+                "amount": 3,
+                "unit": "pcs"
+            },
+            {
+                "name": "Æggeblommer",
+                "amount": 3,
+                "unit": "pcs"
+            },
+            {
+                "name": "Sukker",
+                "amount": 4,
+                "unit": "spsk"
+            },
+            {
+                "name": "Mascarpone",
+                "amount": 500,
+                "unit": "g"
+            },
+            {
+                "name": "Stærk kaffe",
+                "amount": 2,
+                "unit": "dl"
+            },
+            {
+                "name": "Marsala",
+                "amount": 1,
+                "unit": "dl"
+            }
+        ]
+    }
+]
