@@ -23,7 +23,6 @@ struct Recipe
     int n_ingredients;
 };
 
-
 // for testing
 /* int main()
 {
@@ -62,7 +61,7 @@ void list_recipes(struct Recipe *recipes, int n_recipes)
 /**
  * load and parse json data from file
  * @param filename the name of the json file
-*/
+ */
 json_object *load_parse_json_data(char *filename)
 {
     long fsize;
@@ -189,11 +188,11 @@ struct Ingredient *get_ingredients(struct json_object *ingredients_array)
         const char *unit_str = json_object_get_string(unit_object);
         double amount = json_object_get_double(amount_object);
 
-        //get lengths of values
+        // get lengths of values
         int n_name_str = json_object_get_string_len(name_object);
         int n_unit_str = json_object_get_string_len(unit_object);
 
-        if (i == 0) //always allocate with malloc first
+        if (i == 0) // always allocate with malloc first
         {
             ingredients = malloc(sizeof(struct Ingredient));
         }
