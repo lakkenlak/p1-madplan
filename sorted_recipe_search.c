@@ -7,19 +7,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include <Food.c>
 
-typedef struct RECIPE_LIST{
-
-
-} RECIPE_LIST;
-
-
-typedef struct MATCHES {
-
-
-} MATCHES;
 
 
 int search_recipe_from_fridge (const FOOD_LIST fridge[],
