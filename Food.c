@@ -2,8 +2,8 @@ typedef struct {
     char name[20];
     char unit[5];
     double CO2_emission;
-    unsigned int isVegetarian;
-    unsigned int expiration_date;
+    // unsigned int isVegetarian;
+    // unsigned int expiration_date;
 } Food;
 
 
