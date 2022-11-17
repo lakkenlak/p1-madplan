@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "menu.c"
 
 //define recipe struct
 
@@ -16,7 +17,7 @@ int main(void) {
     //read fridge file
     //read user config file
 
-    print_main_menu();
+    start_menu();
 
     return 0;
 }
@@ -27,6 +28,11 @@ char** get_fridge_array(){
 
 int get_fridge_size(){
     return fridge_size;
+}
+
+// Placeholder
+void cook_meal(int meal){
+    printf("Meal cooked!\n");
 }
 
 /*

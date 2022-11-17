@@ -1,39 +1,41 @@
 #include "main.h"
 
-void print_main_menu();                 //char *fridge[], int fridge_size);
+int print_main_menu();
 int validate_menu_input(int number_of_options);
-void generate_meal();
-void print_refrigerator();              //char *fridge[], int fridge_size);
-void print_recipes();
-void print_edit_food_menu();
-void add_food_to_refrigerator();
-void remove_food_from_refrigerator();
-void print_edit_recipe_menu ();
-void add_recipe();
-void remove_recipe();
-void search_recipe();
+int print_meal_menu();
+int print_refrigerator();
+int print_recipes();
+int print_edit_food_menu();
+int add_food_to_refrigerator();
+int remove_food_from_refrigerator();
+int print_edit_recipe_menu ();
+int add_recipe();
+int remove_recipe();
+int search_recipe();
 void quit();
 
-void print_main_menu(){                 //char *fridge[], int fridge_size){
-    printf("\nSelect an option: \n"
-           "\t1. Generate meal \n"
-           "\t2. See refrigerator \n"
-           "\t3. See recipes \n"
-           "\t4. Add/remove food \n"
-           "\t5. Add/remove/search recipe \n"
-           "\t6. Quit \n");
+void start_menu(){
+    int run = 1,
+        menu_input = print_main_menu();
 
-    int menu_input = validate_menu_input(6);
-    switch(menu_input){
-        case 1: generate_meal(); break;
-        case 2: print_refrigerator(); break;            // fridge, fridge_size
-        case 3: print_recipes(); break;
-        case 4: print_edit_food_menu(); break;
-        case 5: print_edit_recipe_menu(); break; 
-        case 6: quit(); break;
-        default:
-            perror("Woopsie! Something went wrong in: print_main_menu()");
-            exit(EXIT_FAILURE);
+    while(run){
+        switch(menu_input){
+            case 0: case 43: case 54: menu_input = print_main_menu(); break;
+            case 1: menu_input = print_meal_menu(); break;
+            case 2: menu_input = print_refrigerator(); break;
+            case 3: menu_input = print_recipes(); break;
+            case 4: menu_input = print_edit_food_menu(); break;
+                case 41: menu_input = add_food_to_refrigerator(); break;
+                case 42: menu_input = remove_food_from_refrigerator(); break;
+            case 5: menu_input = print_edit_recipe_menu(); break;
+                case 51: menu_input = add_recipe(); break;
+                case 52: menu_input = remove_recipe(); break;
+                case 53: menu_input = search_recipe(); break;
+            case 6: quit(); run = 0; break;
+            default:
+                perror("Woopsie! Something went wrong in: start_menu()");
+                exit(EXIT_FAILURE);
+        }
     }
 }
 
@@ -58,13 +60,43 @@ int validate_menu_input(int number_of_options){
     return menu_input;
 }
 
-// Placeholder
-void generate_meal(){
-    printf("- Million Beef generated! \n");
-    print_main_menu();
+int print_main_menu(){
+    printf("\nSelect an option: \n"
+           "\t1. Cook meal \n"
+           "\t2. See refrigerator \n"
+           "\t3. See recipes \n"
+           "\t4. Add/remove food \n"
+           "\t5. Add/remove/search recipe \n"
+           "\t6. Quit \n");
+
+    int menu_input = validate_menu_input(6);
+
+    return menu_input;
 }
 
-void print_refrigerator(){                  //char *fridge[], int fridge_size){
+// Placeholder
+int print_meal_menu(){
+    int number_of_options = 5; // Place holder for: array_length + 1 (+ 1 for 'Return')
+    printf("\nList of meals that can be cooked with ingredients from refrigerator:\n");
+
+    // Placeholder for call to function that prints the list of available meals to be cooked
+    printf("1. Lasagna \n");
+    printf("2. Pizza \n");
+    printf("3. Burger \n");
+    printf("4. Cream pie (yummy!) \n");
+    printf("5. Return \n");
+
+    int menu_input = validate_menu_input(number_of_options);
+
+    if(menu_input < number_of_options){
+        cook_meal(menu_input);
+    }
+
+    menu_input = (menu_input == number_of_options) ? 0 : 1;
+    return menu_input;
+}
+
+int print_refrigerator(){
     char** fridge = get_fridge_array();
     int fridge_size = get_fridge_size();
 
@@ -73,18 +105,20 @@ void print_refrigerator(){                  //char *fridge[], int fridge_size){
         printf("- %s \n", fridge[i]);
     }
 
-    print_main_menu();                      // fridge, fridge_size
+    return 0;
 }
 
 // Placeholder
-void print_recipes(){
+int print_recipes(){
     printf("Recipes: \n"
            "- Lasagna \n"
            "- Shit Cake \n");
-    print_main_menu();
+
+    // Go back to 'main menu'
+    return 0;
 }
 
-void print_edit_food_menu(){
+int print_edit_food_menu(){
     printf("\nAdd or remove food? \n"
            "1. Add food \n"
            "2. Remove food \n"
@@ -92,29 +126,26 @@ void print_edit_food_menu(){
 
     int menu_input = validate_menu_input(3);
 
-    switch(menu_input){
-        case 1: add_food_to_refrigerator(); break;
-        case 2: remove_food_from_refrigerator(); break;
-        case 3: print_main_menu(); break;
-        default:
-            perror("Woopsie! Something went wrong in: print_edit_food_menu()");
-            exit(EXIT_FAILURE);
-    }
+    return menu_input + 40;
 }
 
 // Placeholder
-void add_food_to_refrigerator(){
+int add_food_to_refrigerator(){
     printf("- Poop added to refrigerator! \n");
-    print_edit_food_menu();
+
+    // Go back to 'edit food menu'
+    return 4;
 }
 
 // Placeholder
-void remove_food_from_refrigerator(){
+int remove_food_from_refrigerator(){
     printf("- Blood removed from refrigerator! \n");
-    print_edit_food_menu();
+
+    // Go back to 'edit food menu'
+    return 4;
 }
 
-void print_edit_recipe_menu(){
+int print_edit_recipe_menu(){
     printf("\nAdd or remove recipe? \n"
            "1. Add recipe \n"
            "2. Remove recipe \n"
@@ -123,40 +154,38 @@ void print_edit_recipe_menu(){
 
     int menu_input = validate_menu_input(4);
 
-    switch(menu_input){
-        case 1: add_recipe(); break;
-        case 2: remove_recipe(); break;
-        case 3: search_recipe(); break;
-        case 4: print_main_menu(); break;
-        default:
-            perror("Woopsie! Something went wrong in: print_edit_recipe_menu()");
-            exit(EXIT_FAILURE);
-    }
+    return menu_input + 50;
 }
 
 // Placeholder
-void add_recipe(){
+int add_recipe(){
     printf("- Lasagna recipe added! \n");
-    print_edit_recipe_menu();
+
+    // Go back to 'edit recipe menu'
+    return 5;
 }
 
 // Placeholder
-void remove_recipe(){
+int remove_recipe(){
     printf("- Lasagna recipe removed! \n");
-    print_edit_recipe_menu();
+
+    // Go back to 'edit recipe menu'
+    return 5;
 }
 
 // Placeholder
-void search_recipe(){
+int search_recipe(){
     printf("Found recipe for 'Lasagna': \n"
            "- Lots of cheese! \n"
            "- A pinch of semen \n");
-    print_edit_recipe_menu();
+
+    // Go back to 'edit recipe menu'
+    return 5;
 }
 
 void quit(){
-    // save_refrigerator();
-    // save_recipes();
+    // Save files
+    // Free memory
     printf("\nGood-bye! \n");
-    exit(EXIT_SUCCESS);
+    //exit(EXIT_SUCCESS);
 }
