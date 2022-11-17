@@ -1,13 +1,16 @@
-//Search recipe from fridge
-// take in array of strings frim fridge list
-// first element (name of item) iterates and compares to first element of recipe list (name of recipe item)
-// if first element is found, then compare second element if fridge elements to that specific recipe
-// if all elements match then recipe is returned to an array of recipes, maybe called print_matched_recipes
-//return print_matched_recipes
+/*
+ *   Search recipe from fridge
+ *   take in array of strings frim fridge list
+ *   first element (name of item) iterates and compares to first element of recipe list (name of recipe item)
+ *   if first element is found, then compare second element if fridge elements to that specific recipe
+ *   if all elements match then recipe is returned to an array of recipes, maybe called print_matched_recipes
+ *   return print_matched_recipes
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <erer.c>
 
 #define MAX_FOODS 25 // maximum number of foods
 #define MAX_RECIPES 20000 // max number of recipes
@@ -15,19 +18,26 @@
 #define NAME_LEN 30
 
 /****PROTOTYPE declarations*****/
-void search_recipe_from_fridge (fridge_item_t* fridge[], recipe_t* recipe[], int recipe_list_size, int fridge_list_size);
+int search_recipe_from_fridge (struct fridge* fridge[], struct recipe recipes[], int recipe_list_size, int fridge_list_size);
 
 
 /*******MAIN*******/
-/*search_recipe_from_fridge(fridge, recipe, recipe_list_size, fridge_list_size);*/
 
-void search_recipe_from_fridge (const fridge_item_t* fridge[],
-                                const recipe_t* recipe[], 
+  int main (){
+        
+        
+        search_recipe_from_fridge(fridge, recipe, recipe_list_size, fridge_list_size);
+ 
+  }
+
+
+
+int search_recipe_from_fridge (struct fridge_item_t* fridge[],
+                                struct recipe* recipes[], 
                                 int recipe_list_size, 
                                 int fridge_list_size){
 
-recipe_t* matches;
-char found_foods[MAX_FOODS];
+struct recipe matches[MAX_RECIPES];
 int m = 0; //matches index
 int status = 0; //number of food values found true
 int r, f;      
@@ -36,7 +46,7 @@ int r, f;
             for (f = 0; f <= fridge_list_size; f++ ){    
                 int i = 0;//reset iteration variable
                 do {
-                    if (fridge[f]->name == *recipe[r]->item[i]->name){ // maybe instead strcmp 
+                    if (fridge[f]->name == *recipes[r]->ingredients[i]->name){ // maybe instead strcmp 
                         status++;
                         i++;
                         f++;
@@ -46,28 +56,26 @@ int r, f;
                     }
                     //if all fridge content is found or more than 5 values, then recipe is stored in matches and exit loop
                     if (status > 5){
-                        matches[m++] = *recipe[r];
+                        matches[m++] = *recipes[r];
                         break;
                     }
                 
-                }while (i <= sizeof(recipe[r]->item) ); //number of recipe items
+                }while (i <= sizeof(recipes[r]->ingredients) ); //number of recipe items
             
             } 
 
-            recipe[r++]; //iterate to next structure element
+            recipes[r++]; //iterate to next structure element
             status = 0; //reset status to 0
         }
     //print result
-    printf("From the matched food: %s\n
-            This is is the list of recipes you can choose from: %s\n", found_foods, *matches) // printing structs??????
+    for (int i = 0 ; i <= len(matches) ; i++){
+        printf("This is is the list of recipes you can choose from:\n%s\n%s\n", matches[i]->name, matches[i]->url );
+    }
 
+    return 0;
 }
 
 // String compare method??? 
-// /*Compare name and abbrev components of each element to target */
-//     i = 0;
-//     while (!found && i < n) {
-//         if (strcmp(fridge[i].name, recipe[i]) == 0)
-//             found = 1;
-//         else
-//             ++i;
+/*Compare name and abbrev components of each element to target 
+ *      if (strcmp(fridge[f]->name, *recipes[r]->ingredients[i]->name == 0)
+*/         
