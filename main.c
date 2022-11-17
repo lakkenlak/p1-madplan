@@ -1,9 +1,14 @@
+#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 //define recipe struct
 
 //define fridge item struct
+
+// Global variables (bad practice but works for now)
+char *fridge[] = {"Spunk", "Feces", "Coochie soup", "Ass juice"};
+int fridge_size = sizeof(fridge) / (sizeof(fridge[0]));
 
 int main(void) {
 
@@ -14,6 +19,14 @@ int main(void) {
     print_main_menu();
 
     return 0;
+}
+
+char** get_fridge_array(){
+    return fridge;
+}
+
+int get_fridge_size(){
+    return fridge_size;
 }
 
 /*
