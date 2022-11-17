@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include <json-c/json.h>
+#include "json-c/json.h"
 
 struct Ingredient *get_ingredients(struct json_object *ingredients_array);
 struct Recipe *get_recipes(char *filename, int *length);
