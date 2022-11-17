@@ -1,2 +1,2 @@
-gammel_ost,gram,1.4,122,113
-ny_ost,gram,1.7,111,01
+gammel ost,1.05,0
+ny ost,gram,1.7,0

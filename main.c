@@ -15,7 +15,7 @@ int main(void) {
     //read recipe file
     //read fridge file
     //read user config file
-
+    read_fridge_from_file();
     print_main_menu();
 
     return 0;
@@ -25,7 +25,7 @@ int main(void) {
 *   Returns a Food array that contains the contents of fridge.txt as Food structs
 */
 Food* read_fridge_from_file(){
-    int i = 0, j = 0, count = 1;
+    int i = 0, j = 0, count = 0;
     char line[150];
     char *raw_values;
     Food *food_array;
@@ -42,7 +42,7 @@ Food* read_fridge_from_file(){
     food_array = (Food *) malloc(sizeof(Food) * (count+50));
 
     while(fgets(line, 150, fridge_content_txt) != NULL){
-        char saved_values[5][150] = {"", "", "", "", ""};
+        char saved_values[3][150] = {"", "", ""};
         //printf("%s \n", line); temp line for test
 
         raw_values = strtok(line, ",");
@@ -53,18 +53,19 @@ Food* read_fridge_from_file(){
         
         raw_values = strtok(NULL, ",");
         strcat(saved_values[2], raw_values);
-        
-        raw_values = strtok(NULL, ",");
-        strcat(saved_values[3], raw_values);
-        
-        raw_values = strtok(NULL, ",");
-        strcat(saved_values[4], raw_values);
-        
-        food_array[i] = food_constructor(saved_values[0], saved_values[1], strtod(saved_values[2], NULL), atoi(saved_values[3]), atoi(saved_values[4]));
+
+        food_array[i] = food_constructor(saved_values[0], strtod(saved_values[1], NULL), atoi(saved_values[2]));
         i++;
     }
+
+    printf("TEMPORARY PRINT FOR TESTING read_fridge_from_file() :::: \n");
+    for(int p = 0; p<count; p++){
+        printf("[%d] : name : %s\n", p, (food_array[p].name));
+        printf("[%d] : CO2_emission: %lf\n", p, food_array[p].CO2_emission);
+        printf("[%d] : isVegetarian: %d\n", p, food_array[p].isVegetarian);
+    }
     return food_array;
-}
+}   
 
 /*
 read_fridge_from_file(){}
