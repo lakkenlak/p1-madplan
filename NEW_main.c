@@ -60,7 +60,6 @@ int main (){
     return 0
 }
 
-/* MAIN */
 void print_main_menu(){
     int input;
 
