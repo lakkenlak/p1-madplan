@@ -43,6 +43,7 @@ json_object *load_parse_json_data(char *filename);
 
 /*******MAIN*******/
 int main (){  
+    
     int n_rec;
     struct recipe *rec = get_recipes("./recipes.json", &n_rec);
     struct fridge *fridge[MAX_FOODS];
@@ -59,7 +60,32 @@ int main (){
     return 0
 }
 
-/////      read_fridge_from_file(){}
+/* MAIN */
+void print_main_menu(){
+    int input;
+
+    printf("\nSelect an option: \n"
+           "\t1. Generate meal \n"
+           "\t2. See refrigerator \n"
+           "\t3. See recipes \n"
+           "\t4. Add/remove food \n"
+           "\t5. Add/remove/search recipe \n"
+           "\t6. Quit \n");
+
+    input = validate_menu_input(6);
+
+    switch(input){
+        case 1: generate_meal(); break;
+        case 2: print_refrigerator(); break;
+        case 3: print_recipes(); break;
+        case 4: print_edit_food_menu(); break;
+        case 5: print_edit_recipe_menu(); break; 
+        case 6: quit(); break;
+        default: exit(EXIT_FAILURE);
+    }
+}
+
+/////   read_fridge_from_file(){}
 Food* read_fridge_from_file(){
     int i = 0, j = 0, count = 1;
     char line[150];
