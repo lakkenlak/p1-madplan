@@ -24,13 +24,13 @@ struct Recipe
 };
 
 // for testing
-/* int main()
+ int main()
 {
     int n_rec;
     struct Recipe *rec = get_recipes("./recipes.json", &n_rec);
 
     list_recipes(rec, n_rec);
-} */
+}
 
 /**
  * Lists recipes
