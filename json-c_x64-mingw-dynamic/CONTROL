@@ -1,0 +1,9 @@
+Package: json-c
+Version: 2022-06-26
+Port-Version: 2
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-mingw-dynamic
+Multi-Arch: same
+Abi: 6b7e8a8ef89e63452e5e2dc65d0e9e145b2f201e6bdfcb8aa10512f418072d0f
+Description: A JSON implementation in C
+Type: Port
