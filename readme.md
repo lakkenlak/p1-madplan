@@ -4,4 +4,4 @@
 
 **Compile on unix with**
 
-`gcc ./recipes.c -I"./json-unix/include/json-c" -L"./json-unix/lib" -ljson-c`
+`gcc ./recipes.c -I./json-unix/include/json-c -L./json-unix/lib64 -ljson-c`
