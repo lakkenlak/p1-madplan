@@ -136,7 +136,7 @@ json_object *load_parse_json_data(char *filename)
 {
     long fsize;
     char *buffer;
-    FILE *fp;
+        FILE *fp;
     json_object *recipes_array;
 
     // open json file
