@@ -67,8 +67,7 @@ int *search_recipes(struct Recipe *recipes, int n_recipes, char *keywords[], int
             for (int iii = 0; iii < n_keywords; iii++)
             {
                 toLowerCase(recipes[i].ingredients[ii].name);
-                toLowerCase(keywords[iii]);
-                if (strcmp(recipes[i].ingredients[ii].name, keywords[iii]))
+                if (strstr(recipes[i].ingredients[ii].name, keywords[iii]))
                 {
                     points[i]++;
                 }
