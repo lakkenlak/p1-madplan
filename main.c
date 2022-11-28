@@ -1,57 +1,44 @@
+#define _GNU_SOURCE
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "menu.c"
+#include "recipes.c"
 
-//define recipe struct
+int main(void)
+{
+    int n_recipes;
+    int n_words = 0;
+    char *words[100];
+    struct Recipe *recipes;
 
-//define fridge item struct
+    // read contents from json recipe file
+    recipes = get_recipes("recipes.json", &n_recipes);
 
-// Global variables (bad practice but works for now)
-char *fridge[] = {"Spunk", "Feces", "Coochie soup", "Ass juice"};
-int fridge_size = sizeof(fridge) / (sizeof(fridge[0]));
+    // print instructions
+    printf("Enter a maximum of 100 keywords seperated by spaces, end with a \"q\":\n");
 
-int main(void) {
+    // read input keywords from user
+    for (int i = 0; i < 100; i++)
+    {
+        words[i] = malloc(sizeof(char) * 30);
+        scanf("%s", words[i]); // scan inputs
 
-    //read recipe file
-    //read fridge file
-    //read user config file
+        if (strcmp(words[i], "q") == 0)
+        {
+            break;
+        }
 
-    start_menu();
+        n_words++;
+    }
+
+    // search for recipes matching entered keywords
+    int *results = search_recipes(recipes, n_recipes, words, n_words);
+
+    // print results
+    for (size_t i = 0; i < 30; i++)
+    {
+        printf("%d. %s\n    - %s\n", i + 1, recipes[results[i]].name, recipes[results[i]].url);
+    }
 
     return 0;
 }
-
-char** get_fridge_array(){
-    return fridge;
-}
-
-int get_fridge_size(){
-    return fridge_size;
-}
-
-// Placeholder
-void cook_meal(int meal){
-    printf("Meal cooked!\n");
-}
-
-/*
-read_fridge_from_file(){}
-read_recipes_from_file(){}
-read_user_config_from_file(){}
-
-interperet_user_input(){
-    //read user input
-    //decide what action to take
-}
-
-print_fridge_content(){
-    //format input array to string
-    //output string
-}
-add_fridge_content(){}
-remove_fridge_content(){}
-
-get_recipe_from_list(){}
-search_for_recipe(){}
- */
