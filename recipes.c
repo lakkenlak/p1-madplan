@@ -45,7 +45,7 @@ char *toLowerCase(char *str)
     }
 }
 
-int *search_recipes(struct Recipe *recipes, int n_recipes, char *keywords[], int n_keywords)
+int *search_recipes(struct Recipe *recipes, int n_recipes, char *keywords[], int n_keywords, int *n_results)
 {
 
     int *points;
@@ -85,7 +85,7 @@ int *search_recipes(struct Recipe *recipes, int n_recipes, char *keywords[], int
 
     int i_results_sorted = 0;
 
-    for (int i = 1000; i >= 0; i--)
+    for (int i = 1000; i >= 1; i--)
     {
         for (size_t ii = 0; ii < n_recipes; ii++)
         {
@@ -96,6 +96,8 @@ int *search_recipes(struct Recipe *recipes, int n_recipes, char *keywords[], int
             }
         }
     }
+
+    *n_results = i_results_sorted;
 
     return results_sorted;
 }
