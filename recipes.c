@@ -70,6 +70,7 @@ int *search_recipes(struct Recipe *recipes, int n_recipes, char *keywords[], int
                 if (strstr(recipes[i].ingredients[ii].name, keywords[iii]))
                 {
                     points[i]++;
+                    break;
                 }
             }
         }
