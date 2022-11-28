@@ -3,3 +3,4 @@ CMakeLists.txt*
 *.out
 *.exe
 .vscode
+main

@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include <json-c/json.h>
 
+json_object *load_parse_json_data(char *filename);
 struct Ingredient *get_ingredients(struct json_object *ingredients_array);
 struct Recipe *get_recipes(char *filename, int *length);
-
-json_object *load_parse_json_data(char *filename);
 void list_recipes(struct Recipe *recipes, int n_recipes);
 
 struct Ingredient
@@ -23,13 +23,83 @@ struct Recipe
     int n_ingredients;
 };
 
-// for testing
- int main()
+int cmpfunc(const void *a, const void *b)
 {
-    int n_rec;
-    struct Recipe *rec = get_recipes("./recipes.json", &n_rec);
+    return (*(int *)b - *(int *)a);
+}
 
-    list_recipes(rec, n_rec);
+void copy_arr(int original[], int copy[], int length)
+{
+
+    for (int i = 0; i < length; i++)
+    {
+        copy[i] = original[i];
+    }
+}
+
+char *toLowerCase(char *str)
+{
+    for (int i = 0; str[i]; i++)
+    {
+        str[i] = tolower(str[i]);
+    }
+}
+
+
+int *search_recipes(struct Recipe *recipes, int n_recipes, char *keywords[], int n_keywords)
+{
+
+    int *points;
+    int *points_sorted;
+    int *results_sorted;
+
+    points = malloc(sizeof(int) * n_recipes);
+    points_sorted = malloc(sizeof(int) * n_recipes);
+    results_sorted = malloc(sizeof(int) * n_recipes);
+
+    // loops through recipes
+    for (int i = 0; i < n_recipes; i++)
+    {
+        points[i] = 0;
+        // loops through ingredients in the recipe
+        for (int ii = 0; ii < recipes[i].n_ingredients; ii++)
+        {
+            // loops through keywords
+            for (int iii = 0; iii < n_keywords; iii++)
+            {
+                toLowerCase(recipes[i].ingredients[ii].name);
+                toLowerCase(keywords[iii]);
+                if (strcmp(recipes[i].ingredients[ii].name, keywords[iii]))
+                {
+                    points[i]++;
+                }
+            }
+        }
+
+        double db = (double)points[i] / recipes[i].n_ingredients * 100;
+
+        points[i] = (int)db;
+    }
+
+    copy_arr(points, points_sorted, n_recipes);
+
+    qsort(points_sorted, n_recipes, sizeof(int), cmpfunc);
+
+    int i_results_sorted = 0;
+
+    for (int i = 1000; i >= 0; i--)
+    {
+        for (size_t ii = 0; ii < n_recipes; ii++)
+        {
+            if (points[ii] == i)
+            {
+                results_sorted[i_results_sorted] = ii;
+                i_results_sorted++;
+            }
+        }
+    }
+
+    return results_sorted;
 }
 
 /**
