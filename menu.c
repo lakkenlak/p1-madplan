@@ -175,9 +175,7 @@ int remove_recipe(){
 
 // Placeholder
 int search_recipe(){
-    printf("Found recipe for 'Lasagna': \n"
-           "- Lots of cheese! \n"
-           "- A pinch of semen \n");
+    recipes_search();
 
     // Go back to 'edit recipe menu'
     return 5;

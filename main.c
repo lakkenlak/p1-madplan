@@ -4,8 +4,31 @@
 #include <stdlib.h>
 #include "recipes.c"
 
-int main(void)
-{
+#include "menu.c"
+
+// Global variables (bad practice but works for now)
+char *fridge[] = {"Spunk", "Feces", "Coochie soup", "Ass juice"};
+int fridge_size = sizeof(fridge) / (sizeof(fridge[0]));
+
+int main(void){
+    start_menu();
+    return 0;
+}
+
+char** get_fridge_array(){
+    return fridge;
+}
+
+int get_fridge_size(){
+    return fridge_size;
+}
+
+// Placeholder
+void cook_meal(int meal){
+    printf("Meal cooked!\n");
+}
+
+void recipes_search(){
     int n_recipes;
     int n_words = 0;
     char *words[100];
@@ -39,6 +62,4 @@ int main(void)
     {
         printf("%d. %s\n    - %s\n", i + 1, recipes[results[i]].name, recipes[results[i]].url);
     }
-
-    return 0;
 }
