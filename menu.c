@@ -44,7 +44,7 @@ int validate_menu_input(int number_of_options){
 
     do{
         sentinel = 0;
-        printf("Enter a number (1-%d):", number_of_options);
+        printf("Enter a number (1-%d): ", number_of_options);
         succesful_scan = scanf("%d", &menu_input);
 
         if(succesful_scan != 1 || menu_input < 1 || menu_input > number_of_options) {
