@@ -46,6 +46,7 @@ int validate_menu_input(int number_of_options){
         sentinel = 0;
         printf("Enter a number (1-%d): ", number_of_options);
         succesful_scan = scanf("%d", &menu_input);
+        //printf("\n");
 
         if(succesful_scan != 1 || menu_input < 1 || menu_input > number_of_options) {
             sentinel = 1;
@@ -61,7 +62,7 @@ int validate_menu_input(int number_of_options){
 }
 
 int print_main_menu(){
-    printf("\nSelect an option: \n"
+    printf("Select an option: \n"
            "\t1. Cook meal \n"
            "\t2. See refrigerator \n"
            "\t3. See recipes \n"
@@ -77,7 +78,7 @@ int print_main_menu(){
 // Placeholder
 int print_meal_menu(){
     int number_of_options = 5; // Place holder for: array_length + 1 (+ 1 for 'Return')
-    printf("\nList of meals that can be cooked with ingredients from refrigerator:\n");
+    printf("List of meals that can be cooked with ingredients from refrigerator:\n");
 
     // Placeholder for call to function that prints the list of available meals to be cooked
     printf("1. Lasagna \n");
@@ -119,7 +120,7 @@ int print_recipes(){
 }
 
 int print_edit_food_menu(){
-    printf("\nAdd or remove food? \n"
+    printf("Add or remove food? \n"
            "1. Add food \n"
            "2. Remove food \n"
            "3. Return \n");

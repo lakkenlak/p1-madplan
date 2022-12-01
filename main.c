@@ -40,6 +40,8 @@ void recipes_search()
     char *words[100];
     struct Recipe *recipes;
 
+    printf("\n");
+
     // read contents from json recipe file
     recipes = get_recipes("recipes.json", &n_recipes);
 
