@@ -1,5 +1,14 @@
 #include "main.h"
 
+
+struct fridge_item *get_fridge_array_real();
+void set_fridge_array_real(struct fridge_item *array);
+void set_fridge_occupied_length(int occupied_length);
+void set_fridge_total_length(int total_length);
+int get_fridge_occupied_length();
+int get_fridge_total_length();
+void recipes_search_with_fridge(struct fridge_item fi[], int occupied_length);
+int search_recipe_with_fridge();
 int print_main_menu();
 int validate_menu_input(int number_of_options);
 int print_meal_menu();
@@ -20,7 +29,7 @@ void start_menu(){
 
     while(run){
         switch(menu_input){
-            case 0: case 43: case 54: menu_input = print_main_menu(); break;
+            case 0: case 43: case 55: menu_input = print_main_menu(); break;
             case 1: menu_input = print_meal_menu(); break;
             case 2: menu_input = print_refrigerator(); break;
             case 3: menu_input = print_recipes(); break;
@@ -31,6 +40,7 @@ void start_menu(){
                 case 51: menu_input = add_recipe(); break;
                 case 52: menu_input = remove_recipe(); break;
                 case 53: menu_input = search_recipe(); break;
+                case 54: menu_input = search_recipe_with_fridge();
             case 6: quit(); run = 0; break;
             default:
                 perror("Woopsie! Something went wrong in: start_menu()");
@@ -98,13 +108,9 @@ int print_meal_menu(){
 }
 
 int print_refrigerator(){
-    char** fridge = get_fridge_array();
-    int fridge_size = get_fridge_size();
-
-    printf("Refrigerator (%d items): \n", fridge_size);
-    for(int i = 0; i < fridge_size; i++){
-        printf("- %s \n", fridge[i]);
-    }
+    struct fridge_item *fridge_array = get_fridge_array_real();
+    int occupied_length = get_fridge_occupied_length();
+    print_fridge_items(fridge_array, occupied_length);
 
     return 0;
 }
@@ -130,9 +136,32 @@ int print_edit_food_menu(){
     return menu_input + 40;
 }
 
-// Placeholder
+
 int add_food_to_refrigerator(){
-    printf("- Poop added to refrigerator! \n");
+    struct fridge_item items[100];
+    struct fridge_item *new_fridge_array;
+    int occupied_length;
+    int total_length;
+    int n_items = 0;
+    printf("Please enter the name of the ingredients you wish to add to the fridge, end with  \"q\"\n");
+    for (int i = 0; i < 100; i++)
+    {
+        scanf(" %29[^\n]", items[i].name); 
+
+        if (strcmp(items[i].name, "q") == 0)
+        {
+            break;
+        }
+
+        n_items++;
+    }
+    write_fridge_items_to_fridge(items, n_items);
+
+    new_fridge_array = read_fridge_from_file(&occupied_length, &total_length);
+    set_fridge_array_real(new_fridge_array);
+    set_fridge_occupied_length(occupied_length);
+    set_fridge_total_length(total_length);
+
 
     // Go back to 'edit food menu'
     return 4;
@@ -140,8 +169,55 @@ int add_food_to_refrigerator(){
 
 // Placeholder
 int remove_food_from_refrigerator(){
-    printf("- Blood removed from refrigerator! \n");
+    
+    struct fridge_item *fridge_array = get_fridge_array_real();
+    int occupied_length = get_fridge_occupied_length();
+    char string_deletion[101];
+    int int_string_deletion; 
+    int deletions[occupied_length];
+    int num_deletions = 0; //change name to num_deletions
+    int quit = 0;
 
+    print_fridge_items(fridge_array, occupied_length);
+    printf("Which items would you like to remove?\n");
+    printf("Input each number that corresponds to the item, seperated by spaces\n");
+    printf("Once you have inputted the numbers, write 'q' to proceed (without quotes)\n");
+    do{
+        scanf("%s", &string_deletion);
+
+        if(strcmp(string_deletion, "q") != 0){
+            int_string_deletion = atoi(string_deletion);
+            if(int_string_deletion < occupied_length && int_string_deletion >= 0){
+                deletions[num_deletions] = int_string_deletion;
+                num_deletions++;
+            }
+            else{
+                printf("The inputted number %s does not correspond to any items\n", string_deletion);
+            }
+        }
+        else{
+            quit = 1;
+        }
+    }while(!quit && num_deletions < occupied_length);
+    
+    printf("The following item(s) have been removed from your fridge:\n");
+    for(int j = 0; j<num_deletions; j++){
+        printf("%s\n", fridge_array[deletions[j]].name);
+    }
+
+    printf("Deletions array:\n");
+    for(int j = 0; j<num_deletions; j++){
+        printf("deletions[%d] = %d\n", j, deletions[j]);
+    }
+
+    struct fridge_item *new_fridge;
+    int new_fridge_occupied_length;
+    int new_fridge_total_length;
+    new_fridge = remove_items_from_fridge(fridge_array, occupied_length, deletions, num_deletions, 
+                                            &new_fridge_occupied_length, &new_fridge_total_length);
+    set_fridge_array_real(new_fridge);
+    set_fridge_total_length(new_fridge_total_length);
+    set_fridge_occupied_length(new_fridge_occupied_length);
     // Go back to 'edit food menu'
     return 4;
 }
@@ -151,9 +227,10 @@ int print_edit_recipe_menu(){
            "1. Add recipe \n"
            "2. Remove recipe \n"
            "3. Search for recipe \n"
-           "4. Return \n");
+           "4. Search for recipe by contents of fridge \n"
+           "5. Return \n");
 
-    int menu_input = validate_menu_input(4);
+    int menu_input = validate_menu_input(5);
 
     return menu_input + 50;
 }
@@ -178,6 +255,16 @@ int remove_recipe(){
 int search_recipe(){
     recipes_search();
 
+    // Go back to 'edit recipe menu'
+    return 5;
+}
+
+int search_recipe_with_fridge(){
+    struct fridge_item *fridge_array = get_fridge_array_real();
+    int length = get_fridge_occupied_length();
+    print_fridge_items(fridge_array, length);
+
+    recipes_search_with_fridge(fridge_array, length);
     // Go back to 'edit recipe menu'
     return 5;
 }
