@@ -1,6 +1,5 @@
 #include "main.h"
 
-
 struct fridge_item *get_fridge_array_real();
 void set_fridge_array_real(struct fridge_item *array);
 void set_fridge_occupied_length(int occupied_length);
@@ -40,7 +39,7 @@ void start_menu(){
                 case 51: menu_input = add_recipe(); break;
                 case 52: menu_input = remove_recipe(); break;
                 case 53: menu_input = search_recipe(); break;
-                case 54: menu_input = search_recipe_with_fridge();
+                case 54: menu_input = search_recipe_with_fridge(); break;
             case 6: quit(); run = 0; break;
             default:
                 perror("Woopsie! Something went wrong in: start_menu()");
@@ -56,11 +55,10 @@ int validate_menu_input(int number_of_options){
         sentinel = 0;
         printf("Enter a number (1-%d): ", number_of_options);
         succesful_scan = scanf("%d", &menu_input);
-        //printf("\n");
 
         if(succesful_scan != 1 || menu_input < 1 || menu_input > number_of_options) {
             sentinel = 1;
-            printf("\nAre you stupid? Try again!\n");
+            printf("\nNo characters! Try again!\n");
         }
 
         // Skips rest of data line just in case a char is entered
@@ -90,17 +88,12 @@ int print_meal_menu(){
     int number_of_options = 5; // Place holder for: array_length + 1 (+ 1 for 'Return')
     printf("List of meals that can be cooked with ingredients from refrigerator:\n");
 
-    // Placeholder for call to function that prints the list of available meals to be cooked
-    printf("1. Lasagna \n");
-    printf("2. Pizza \n");
-    printf("3. Burger \n");
-    printf("4. Cream pie (yummy!) \n");
     printf("5. Return \n");
 
     int menu_input = validate_menu_input(number_of_options);
 
     if(menu_input < number_of_options){
-        cook_meal(menu_input);
+        //cook_meal(menu_input);
     }
 
     menu_input = (menu_input == number_of_options) ? 0 : 1;
@@ -117,9 +110,6 @@ int print_refrigerator(){
 
 // Placeholder
 int print_recipes(){
-    printf("Recipes: \n"
-           "- Lasagna \n"
-           "- Shit Cake \n");
 
     // Go back to 'main menu'
     return 0;
@@ -167,7 +157,6 @@ int add_food_to_refrigerator(){
     return 4;
 }
 
-// Placeholder
 int remove_food_from_refrigerator(){
     
     struct fridge_item *fridge_array = get_fridge_array_real();
@@ -218,6 +207,7 @@ int remove_food_from_refrigerator(){
     set_fridge_array_real(new_fridge);
     set_fridge_total_length(new_fridge_total_length);
     set_fridge_occupied_length(new_fridge_occupied_length);
+
     // Go back to 'edit food menu'
     return 4;
 }
@@ -237,7 +227,6 @@ int print_edit_recipe_menu(){
 
 // Placeholder
 int add_recipe(){
-    printf("- Lasagna recipe added! \n");
 
     // Go back to 'edit recipe menu'
     return 5;
@@ -245,7 +234,6 @@ int add_recipe(){
 
 // Placeholder
 int remove_recipe(){
-    printf("- Lasagna recipe removed! \n");
 
     // Go back to 'edit recipe menu'
     return 5;

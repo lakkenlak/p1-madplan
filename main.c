@@ -2,20 +2,17 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+
 #include "recipes.c"
 #include "fridge.c"
-
 #include "menu.c"
 
 // Global variables (bad practice but works for now)
-char *fridge[] = {"Spunk", "Feces", "Coochie soup", "Ass juice"};
-int fridge_size = sizeof(fridge) / (sizeof(fridge[0]));
 struct fridge_item *fridge_array;
 int fridge_occupied_length;
 int fridge_total_length;
 
-int main(void)
-{
+int main(void){
     fridge_array = read_fridge_from_file(&fridge_occupied_length, 
                                          &fridge_total_length);
     start_menu();
@@ -44,22 +41,6 @@ int get_fridge_total_length(){
 
 void set_fridge_total_length(int total_length){
     fridge_total_length = total_length;
-}
-
-char **get_fridge_array()
-{
-    return fridge;
-}
-
-int get_fridge_size()
-{
-    return fridge_size;
-}
-
-// Placeholder
-void cook_meal(int meal)
-{
-    printf("Meal cooked!\n");
 }
 
 void recipes_search()
