@@ -22,30 +22,62 @@ int remove_recipe();
 int search_recipe();
 void quit();
 
+enum menu_selection {
+    MAIN_MENU = 0,
+    COOK_MEAL = 1,
+    REFRIGERATOR = 2,
+    RECIPES = 3,
+    FOOD_MENU = 4,
+        ADD_FOOD = 41,      // Sub-menu
+        REMOVE_FOOD = 42,
+    RECIPE_MENU = 5,
+        ADD_RECIPE = 51,    // Sub-menu
+        REMOVE_RECIPE = 52,
+        SEARCH_RECIPE = 53,
+        SEARCH_FRIDGE_RECIPES = 54,
+    QUIT = 6
+};
+
 void start_menu(){
-    int run = 1,
-        menu_input = print_main_menu();
+    int run = 1;
+    int menu_selection = print_main_menu();
 
     while(run){
-        switch(menu_input){
-            case 0: case 43: case 55: menu_input = print_main_menu(); break;
-            case 1: menu_input = print_meal_menu(); break;
-            case 2: menu_input = print_refrigerator(); break;
-            case 3: menu_input = print_recipes(); break;
-            case 4: menu_input = print_edit_food_menu(); break;
-                case 41: menu_input = add_food_to_refrigerator(); break;
-                case 42: menu_input = remove_food_from_refrigerator(); break;
-            case 5: menu_input = print_edit_recipe_menu(); break;
-                case 51: menu_input = add_recipe(); break;
-                case 52: menu_input = remove_recipe(); break;
-                case 53: menu_input = search_recipe(); break;
-                case 54: menu_input = search_recipe_with_fridge(); break;
-            case 6: quit(); run = 0; break;
+        switch(menu_selection){
+            case MAIN_MENU:             menu_selection = print_main_menu();               break;
+            case COOK_MEAL:             menu_selection = print_meal_menu();               break;
+            case REFRIGERATOR:          menu_selection = print_refrigerator();            break;
+            case RECIPES:               menu_selection = print_recipes();                 break;
+
+            case FOOD_MENU:             menu_selection = print_edit_food_menu();          break;
+            case ADD_FOOD:              menu_selection = add_food_to_refrigerator();      break;
+            case REMOVE_FOOD:           menu_selection = remove_food_from_refrigerator(); break;
+
+            case RECIPE_MENU:           menu_selection = print_edit_recipe_menu();        break;
+            case ADD_RECIPE:            menu_selection = add_recipe();                    break;
+            case REMOVE_RECIPE:         menu_selection = remove_recipe();                 break;
+            case SEARCH_RECIPE:         menu_selection = search_recipe();                 break;
+            case SEARCH_FRIDGE_RECIPES: menu_selection = search_recipe_with_fridge();     break;
+
+            case QUIT:                  quit(); run = 0;                                  break;
             default:
                 perror("Woopsie! Something went wrong in: start_menu()");
                 exit(EXIT_FAILURE);
         }
     }
+}
+
+int print_main_menu(){
+    printf("Select an option: \n"
+           "\t1. Cook meal \n"
+           "\t2. See refrigerator \n"
+           "\t3. See recipes \n"
+           "\t4. Add/remove food \n"
+           "\t5. Add/remove/search recipe \n"
+           "\t6. Quit \n");
+
+    int menu_selection = validate_menu_input(6);
+    return menu_selection;
 }
 
 int validate_menu_input(int number_of_options){
@@ -66,20 +98,7 @@ int validate_menu_input(int number_of_options){
     }
     while(sentinel);
 
-    return menu_input;
-}
-
-int print_main_menu(){
-    printf("Select an option: \n"
-           "\t1. Cook meal \n"
-           "\t2. See refrigerator \n"
-           "\t3. See recipes \n"
-           "\t4. Add/remove food \n"
-           "\t5. Add/remove/search recipe \n"
-           "\t6. Quit \n");
-
-    int menu_input = validate_menu_input(6);
-
+    printf("\n");
     return menu_input;
 }
 
@@ -87,17 +106,20 @@ int print_main_menu(){
 int print_meal_menu(){
     int number_of_options = 5; // Place holder for: array_length + 1 (+ 1 for 'Return')
     printf("List of meals that can be cooked with ingredients from refrigerator:\n");
+    printf("\t1. Meal 1 \n"
+           "\t2. Meal 2 \n"
+           "\t3. Meal 3 \n"
+           "\t4. Meal 4 \n"
+           "\t5. Return \n");
 
-    printf("5. Return \n");
+    int menu_selection = validate_menu_input(number_of_options);
 
-    int menu_input = validate_menu_input(number_of_options);
-
-    if(menu_input < number_of_options){
-        //cook_meal(menu_input);
+    if(menu_selection < number_of_options){
+        printf("Cooking meal %d! \n\n", menu_selection);
     }
 
-    menu_input = (menu_input == number_of_options) ? 0 : 1;
-    return menu_input;
+    // Return to main menu if last menu option (Return) is selected (which is equal to number_of_options)
+    return (menu_selection != number_of_options);
 }
 
 int print_refrigerator(){
@@ -105,14 +127,14 @@ int print_refrigerator(){
     int occupied_length = get_fridge_occupied_length();
     print_fridge_items(fridge_array, occupied_length);
 
-    return 0;
+    return MAIN_MENU;
 }
 
 // Placeholder
 int print_recipes(){
 
     // Go back to 'main menu'
-    return 0;
+    return MAIN_MENU;
 }
 
 int print_edit_food_menu(){
@@ -121,11 +143,9 @@ int print_edit_food_menu(){
            "2. Remove food \n"
            "3. Return \n");
 
-    int menu_input = validate_menu_input(3);
-
-    return menu_input + 40;
+    int menu_selection = validate_menu_input(3);
+    return (menu_selection == 3) ? MAIN_MENU : menu_selection + 40;
 }
-
 
 int add_food_to_refrigerator(){
     struct fridge_item items[100];
@@ -152,9 +172,8 @@ int add_food_to_refrigerator(){
     set_fridge_occupied_length(occupied_length);
     set_fridge_total_length(total_length);
 
-
     // Go back to 'edit food menu'
-    return 4;
+    return FOOD_MENU;
 }
 
 int remove_food_from_refrigerator(){
@@ -209,7 +228,7 @@ int remove_food_from_refrigerator(){
     set_fridge_occupied_length(new_fridge_occupied_length);
 
     // Go back to 'edit food menu'
-    return 4;
+    return FOOD_MENU;
 }
 
 int print_edit_recipe_menu(){
@@ -220,23 +239,22 @@ int print_edit_recipe_menu(){
            "4. Search for recipe by contents of fridge \n"
            "5. Return \n");
 
-    int menu_input = validate_menu_input(5);
-
-    return menu_input + 50;
+    int menu_selection = validate_menu_input(5);
+    return (menu_selection == 5) ? MAIN_MENU : menu_selection + 50;
 }
 
 // Placeholder
 int add_recipe(){
 
     // Go back to 'edit recipe menu'
-    return 5;
+    return RECIPE_MENU;
 }
 
 // Placeholder
 int remove_recipe(){
 
     // Go back to 'edit recipe menu'
-    return 5;
+    return RECIPE_MENU;
 }
 
 // Placeholder
@@ -244,22 +262,19 @@ int search_recipe(){
     recipes_search();
 
     // Go back to 'edit recipe menu'
-    return 5;
+    return RECIPE_MENU;
 }
 
 int search_recipe_with_fridge(){
     struct fridge_item *fridge_array = get_fridge_array_real();
     int length = get_fridge_occupied_length();
     print_fridge_items(fridge_array, length);
-
     recipes_search_with_fridge(fridge_array, length);
+
     // Go back to 'edit recipe menu'
-    return 5;
+    return RECIPE_MENU;
 }
 
 void quit(){
-    // Save files
-    // Free memory
-    printf("\nGood-bye! \n");
-    //exit(EXIT_SUCCESS);
+    printf("Have a nice day! \n");
 }
