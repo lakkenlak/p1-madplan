@@ -1,5 +1,3 @@
-#include "main.h"
-
 struct fridge_item *get_fridge_array_real();
 void set_fridge_array_real(struct fridge_item *array);
 void set_fridge_occupied_length(int occupied_length);
@@ -20,6 +18,7 @@ int print_edit_recipe_menu ();
 int add_recipe();
 int remove_recipe();
 int search_recipe();
+void recipes_search();
 void quit();
 
 enum menu_selection {
