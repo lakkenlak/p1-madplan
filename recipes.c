@@ -49,11 +49,9 @@ int *search_recipes(struct Recipe *recipes, int n_recipes, char *keywords[], int
 {
 
     int *points;
-    int *points_sorted;
     int *results_sorted;
 
     points = malloc(sizeof(int) * n_recipes);
-    points_sorted = malloc(sizeof(int) * n_recipes);
     results_sorted = malloc(sizeof(int) * n_recipes);
 
     // loops through recipes
@@ -79,10 +77,6 @@ int *search_recipes(struct Recipe *recipes, int n_recipes, char *keywords[], int
 
         points[i] = (int)db;
     }
-
-    copy_arr(points, points_sorted, n_recipes);
-
-    qsort(points_sorted, n_recipes, sizeof(int), cmpfunc);
 
     int i_results_sorted = 0;
 
