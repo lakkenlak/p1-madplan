@@ -39,14 +39,14 @@ void start_menu(){
             case SEARCH_FRIDGE_RECIPES: menu_selection = search_recipe_with_fridge();     break;
             case QUIT:                  quit(); run = 0;                                  break;
             default:
-                perror("Woopsie! Something went wrong in: start_menu()");
+                printf("Whoopsie! Something went wrong in: start_menu()");
                 exit(EXIT_FAILURE);
         }
     }
 }
 
 int print_main_menu(){
-    printf("Select an option: \n"
+    printf("\nSelect an option: \n"
            "   1. See refrigerator \n"
            "   2. Add food \n"
            "   3. Remove food \n"
@@ -59,14 +59,14 @@ int print_main_menu(){
 }
 
 int validate_menu_input(int number_of_options){
-    int menu_input, succesful_scan, sentinel;
+    int menu_input, successful_scan, sentinel;
 
     do{
         sentinel = 0;
         printf("Enter a number (1-%d): ", number_of_options);
-        succesful_scan = scanf("%d", &menu_input);
+        successful_scan = scanf("%d", &menu_input);
 
-        if(succesful_scan != 1 || menu_input < 1 || menu_input > number_of_options) {
+        if(successful_scan != 1 || menu_input < 1 || menu_input > number_of_options) {
             sentinel = 1;
             printf("\nNo characters and stay btw. 1-%d! Try again!\n", number_of_options);
         }
@@ -131,7 +131,7 @@ int remove_food_from_refrigerator(){
     printf("Input each number that corresponds to the item, seperated by spaces\n");
     printf("Once you have inputted the numbers, write 'q' to proceed (without quotes)\n");
     do{
-        scanf("%s", &string_deletion);
+        scanf("%s", string_deletion);
 
         if(strcmp(string_deletion, "q") != 0){
             int_string_deletion = atoi(string_deletion);
