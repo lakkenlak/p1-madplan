@@ -9,45 +9,34 @@ struct Recipe *get_recipes(char *filename, int *length);
 void list_recipes(struct Recipe *recipes, int n_recipes);
 int *search_recipes(struct Recipe *recipes, int n_recipes, char *keywords[], int n_keywords);
 
-struct Ingredient
-{
+struct Ingredient{
     char *name;
     double amount;
     char *unit;
 };
 
-struct Recipe
-{
+struct Recipe{
     char *name;
     char *url;
     struct Ingredient *ingredients;
     int n_ingredients;
 };
 
-int cmpfunc(const void *a, const void *b)
-{
+int cmpfunc(const void *a, const void *b){
     return (*(int *)b - *(int *)a);
 }
 
-void copy_arr(int original[], int copy[], int length)
-{
-
+void copy_arr(int original[], int copy[], int length){
     for (int i = 0; i < length; i++)
-    {
         copy[i] = original[i];
-    }
 }
 
-char *toLowerCase(char *str)
-{
+char *toLowerCase(char *str){
     for (int i = 0; str[i]; i++)
-    {
         str[i] = tolower(str[i]);
-    }
 }
 
-void recipes_search()
-{
+void recipes_search(){
     int n_recipes;
     int n_words = 0;
     int n_results = 0;
@@ -63,15 +52,12 @@ void recipes_search()
     printf("Enter a maximum of 100 keywords seperated by spaces, end with a \"q\":\n");
 
     // read input keywords from user
-    for (int i = 0; i < 100; i++)
-    {
+    for (int i = 0; i < 100; i++){
         words[i] = malloc(sizeof(char) * 30);
         scanf("%s", words[i]); // scan inputs
 
         if (strcmp(words[i], "q") == 0)
-        {
             break;
-        }
 
         n_words++;
     }
@@ -81,14 +67,10 @@ void recipes_search()
 
     // print results
     for (int i = 0; i < 50; i++)
-    {
         printf("%d. %s\n    - %s\n", i + 1, recipes[results[i]].name, recipes[results[i]].url);
-    }
 }
 
-int *search_recipes(struct Recipe *recipes, int n_recipes, char *keywords[], int n_keywords)
-{
-
+int *search_recipes(struct Recipe *recipes, int n_recipes, char *keywords[], int n_keywords){
     int *points;
     int *results_sorted;
 
@@ -96,18 +78,14 @@ int *search_recipes(struct Recipe *recipes, int n_recipes, char *keywords[], int
     results_sorted = malloc(sizeof(int) * n_recipes);
 
     // loops through recipes
-    for (int i = 0; i < n_recipes; i++)
-    {
+    for (int i = 0; i < n_recipes; i++){
         points[i] = 0;
         // loops through ingredients in the recipe
-        for (int ii = 0; ii < recipes[i].n_ingredients; ii++)
-        {
+        for (int ii = 0; ii < recipes[i].n_ingredients; ii++){
             // loops through keywords
-            for (int iii = 0; iii < n_keywords; iii++)
-            {
+            for (int iii = 0; iii < n_keywords; iii++){
                 toLowerCase(recipes[i].ingredients[ii].name);
-                if (strstr(recipes[i].ingredients[ii].name, keywords[iii]))
-                {
+                if (strstr(recipes[i].ingredients[ii].name, keywords[iii])){
                     points[i]++;
                     break;
                 }
@@ -121,12 +99,9 @@ int *search_recipes(struct Recipe *recipes, int n_recipes, char *keywords[], int
 
     int i_results_sorted = 0;
 
-    for (int i = 1000; i >= 1; i--)
-    {
-        for (int ii = 0; ii < n_recipes; ii++)
-        {
-            if (points[ii] == i)
-            {
+    for (int i = 1000; i >= 1; i--){
+        for (int ii = 0; ii < n_recipes; ii++){
+            if (points[ii] == i){
                 results_sorted[i_results_sorted] = ii;
                 i_results_sorted++;
             }
@@ -141,18 +116,15 @@ int *search_recipes(struct Recipe *recipes, int n_recipes, char *keywords[], int
  * @param recipes the list of recipes to list
  * @param n_recipes the length of the recipies list
  */
-void list_recipes(struct Recipe *recipes, int n_recipes)
-{
+void list_recipes(struct Recipe *recipes, int n_recipes){
     printf("\n");
 
-    for (int i = 0; i < n_recipes; i++)
-    {
+    for (int i = 0; i < n_recipes; i++){
         printf("%s:\n", recipes[i].name);
         printf("    url: %s\n", recipes[i].name);
         printf("    ingredients:\n");
 
-        for (int n = 0; n < recipes[i].n_ingredients; n++)
-        {
+        for (int n = 0; n < recipes[i].n_ingredients; n++){
             printf("        %s\n", recipes[i].ingredients[n].name);
             printf("            amount: %f\n", recipes[i].ingredients[n].amount);
             printf("            unit: %s\n", recipes[i].ingredients[n].unit);
@@ -166,8 +138,7 @@ void list_recipes(struct Recipe *recipes, int n_recipes)
  * load and parse json data from file
  * @param filename the name of the json file
  */
-json_object *load_parse_json_data(char *filename)
-{
+json_object *load_parse_json_data(char *filename){
     long fsize;
     char *buffer;
     FILE *fp;
@@ -175,10 +146,9 @@ json_object *load_parse_json_data(char *filename)
 
     // open json file
     fp = fopen(filename, "r");
-    if (fp == NULL)
-    {
+    if (fp == NULL){
         printf("ERROR: could not open %s\n", filename);
-        exit(0);
+        exit(EXIT_FAILURE);
     }
 
     // get length of file buffer
@@ -203,8 +173,7 @@ json_object *load_parse_json_data(char *filename)
  * @param filename the name of the file to read recipes from
  * @param length output parameter to get the length
  */
-struct Recipe *get_recipes(char *filename, int *length)
-{
+struct Recipe *get_recipes(char *filename, int *length){
     json_object *recipes_array = NULL;
     int n_recipes_array;
     struct Recipe *recipes;
@@ -212,10 +181,9 @@ struct Recipe *get_recipes(char *filename, int *length)
     // parse json
     recipes_array = load_parse_json_data(filename);
 
-    if (recipes_array == NULL)
-    {
+    if (recipes_array == NULL){
         printf("ERROR: not able to parse data\n");
-        exit(0);
+        exit(EXIT_FAILURE);
     }
 
     n_recipes_array = json_object_array_length(recipes_array);
@@ -223,8 +191,7 @@ struct Recipe *get_recipes(char *filename, int *length)
 
     printf("loaded %d recipes\n", n_recipes_array);
 
-    for (int i = 0; i < n_recipes_array; i++)
-    {
+    for (int i = 0; i < n_recipes_array; i++){
         // get all the objects
         json_object *recipe_object = json_object_array_get_idx(recipes_array, i);
         json_object *name_object = json_object_object_get(recipe_object, "name");
@@ -244,13 +211,9 @@ struct Recipe *get_recipes(char *filename, int *length)
         struct Ingredient *ingredients = get_ingredients(ingredients_array);
 
         if (i == 0) // make sure all recipe pointers are first initialized with malloc
-        {
             recipes = malloc(sizeof(struct Recipe));
-        }
         else
-        {
             recipes = realloc(recipes, sizeof(struct Recipe) * (i + 1));
-        }
 
         // allocate memory based on the length of the strings and add pointer to current recipe
         recipes[i].name = malloc(sizeof(char) * n_name_str + 1);
@@ -272,15 +235,13 @@ struct Recipe *get_recipes(char *filename, int *length)
  * get the ingredients in a recipe
  * @param ingredients_array the object array from json-c that represents the ingredients
  */
-struct Ingredient *get_ingredients(struct json_object *ingredients_array)
-{
+struct Ingredient *get_ingredients(struct json_object *ingredients_array){
     struct Ingredient *ingredients;
 
     // get length of ingredients_array
     int n_ingredients_array = json_object_array_length(ingredients_array);
 
-    for (int i = 0; i < n_ingredients_array; i++)
-    {
+    for (int i = 0; i < n_ingredients_array; i++){
         // get all json-c objects in ingredient
         json_object *ingredient_object = json_object_array_get_idx(ingredients_array, i);
         json_object *name_object = json_object_object_get(ingredient_object, "name");
@@ -297,13 +258,9 @@ struct Ingredient *get_ingredients(struct json_object *ingredients_array)
         int n_unit_str = json_object_get_string_len(unit_object);
 
         if (i == 0) // always allocate with malloc first
-        {
             ingredients = malloc(sizeof(struct Ingredient));
-        }
         else
-        {
             ingredients = realloc(ingredients, sizeof(struct Ingredient) * (i + 1));
-        }
 
         // allocate memory
         ingredients[i].name = malloc(sizeof(char) * n_name_str + 1);
