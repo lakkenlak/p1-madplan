@@ -76,7 +76,7 @@ void recipes_search()
     int *results = search_recipes(recipes, n_recipes, words, n_words);
 
     // print results
-    for (size_t i = 0; i < 50; i++)
+    for (int i = 0; i < 50; i++)
     {
         printf("%d. %s\n    - %s\n", i + 1, recipes[results[i]].name, recipes[results[i]].url);
     }
@@ -106,7 +106,7 @@ void recipes_search_with_fridge(struct fridge_item fi[], int occupied_length)
 
 
     // print results
-    for (size_t i = 0; i < 20; i++)
+    for (int i = 0; i < 20; i++)
     {
         printf("%d. %s\n    - %s\n", i + 1, recipes[results[i]].name, recipes[results[i]].url);
     }
