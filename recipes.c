@@ -66,12 +66,12 @@ void recipes_search(){
     int *results = search_recipes(recipes, n_recipes, words, n_words);
 
     // print results
-    for (int i = 0; i < 50; i++)
+    for (int i = 0; i < 50; i++){
         printf("%d. %s\n    - %s\n", i + 1, recipes[results[i]].name, recipes[results[i]].url);
-
+    }
+    
     // free memory
-    for (int i = 0; i < n_recipes; i++)
-    {
+    for (int i = 0; i < n_recipes; i++){
         free(recipes[i].name);
         free(recipes[i].url);
         free(recipes[i].ingredients);

@@ -11,7 +11,6 @@ void overwrite_fridge(struct fridge_item f_items[], int length);
 void write_fridge_items_to_fridge(struct fridge_item f_items[], int length);
 void write_fridge_item_to_fridge(struct fridge_item fi);
 void print_fridge_items(struct fridge_item fi[], int occupied_length);
-//void user_input_write_to_fridge();
 
 void print_fridge_items(struct fridge_item fi[], int occupied_length){
     printf("\n:::::::: DISPLAYING FRIDGE ::::::::\n");
@@ -21,27 +20,6 @@ void print_fridge_items(struct fridge_item fi[], int occupied_length){
     }
     printf(":::::::::::::::::::::::::::::::::::\n\n");
 }
-
-
-/*
-void user_input_write_to_fridge(){
-    struct fridge_item items[100];
-    int n_items = 0;
-    printf("Please enter the name of the ingredients you wish to add to the fridge, end with  \"q\"\n");
-    for (int i = 0; i < 100; i++)
-    {
-        scanf("%s", items[i].name); // scan inputs
-
-        if (strcmp(items[i].name, "q") == 0)
-        {
-            break;
-        }
-
-        n_items++;
-    }
-    write_fridge_items_to_fridge(items, n_items);
-}
-*/
 
 void write_fridge_item_to_fridge(struct fridge_item fi){
     FILE *fridge_txt = fopen("fridge.txt", "a");
@@ -80,8 +58,6 @@ void overwrite_fridge(struct fridge_item f_items[], int length){
     fclose(fridge_txt);
 }
 
-
-
 /*
 *   Returns a fridge_item array that contains the contents of fridge.txt as fridge_item structs
 *   Also returns an output parameter with the number of occupied spaces in the array,
@@ -110,6 +86,7 @@ struct fridge_item *read_fridge_from_file(int *occupied_length, int *total_lengt
         printf("Could not create array of fridge items, something went wrong...");
         return NULL;
     }
+    
     int success = 0;
     int items = 0;
 
@@ -128,22 +105,14 @@ struct fridge_item *read_fridge_from_file(int *occupied_length, int *total_lengt
             printf("Error reading fridge.txt \n");
             return NULL;
         }
-
-    }while(!feof(fridge_txt));
-    fclose(fridge_txt);
-
-    /*
-    printf("TEMPORARY PRINT FOR TESTING read_fridge_from_file() :::: \n");
-    for(int p = 0; p<count; p++){
-        printf("[%d] : name : %s\n", p, fridge_item_array[p].name);
     }
-    */
+    while(!feof(fridge_txt));
+    fclose(fridge_txt);
 
     *occupied_length = items;
     *total_length = count + 50;
     return fridge_item_array;
 }  
-
 
 /*
 *   Creates a new fridge_item array given an int array deletions[],
@@ -184,9 +153,34 @@ struct fridge_item *remove_items_from_fridge(struct fridge_item fridge[],
     }
 
     *new_fridge_occupied_length = z;
-    printf("Displaying new fridge\n");
-    print_fridge_items(new_fridge, z);
 
     overwrite_fridge(new_fridge, z);
     return new_fridge;
+}
+
+void recipes_search_with_fridge(struct fridge_item fi[], int occupied_length){
+    int n_recipes;
+    int n_words = occupied_length;
+    int n_results = 0;
+    struct Recipe *recipes;
+    char *words[100];
+
+    printf("\n");
+
+    // read contents from json recipe file
+    recipes = get_recipes("recipes.json", &n_recipes);
+
+    for(int i = 0; i < occupied_length; i++){
+        words[i] = malloc(sizeof(char) * 30);
+        strcpy(words[i], fi[i].name);
+    }
+
+    // search for recipes matching entered keywords
+    int *results = search_recipes(recipes, n_recipes, words, n_words);
+
+    // print results
+    for (int i = 0; i < 20; i++)
+    {
+        printf("%d. %s\n    - %s\n", i + 1, recipes[results[i]].name, recipes[results[i]].url);
+    }
 }
