@@ -68,6 +68,16 @@ void recipes_search(){
     // print results
     for (int i = 0; i < 50; i++)
         printf("%d. %s\n    - %s\n", i + 1, recipes[results[i]].name, recipes[results[i]].url);
+
+    // free memory
+    for (int i = 0; i < n_recipes; i++)
+    {
+        free(recipes[i].name);
+        free(recipes[i].url);
+        free(recipes[i].ingredients);
+    }
+    free(recipes);
+    free(results);
 }
 
 int *search_recipes(struct Recipe *recipes, int n_recipes, char *keywords[], int n_keywords){
