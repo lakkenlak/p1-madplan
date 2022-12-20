@@ -74,15 +74,12 @@ void recipes_search()
     }
 
     // search for recipes matching entered keywords
-    int *results = search_recipes(recipes, n_recipes, words, n_words, &n_results);
+    int *results = search_recipes(recipes, n_recipes, words, n_words);
 
     // print results
-    for (size_t i = 0; i < n_results; i++)
+    for (size_t i = 0; i < 50; i++)
     {
         printf("%d. %s\n    - %s\n", i + 1, recipes[results[i]].name, recipes[results[i]].url);
-
-        if (i >= 19)
-            break;
     }
 }
 
@@ -106,16 +103,13 @@ void recipes_search_with_fridge(struct fridge_item fi[], int occupied_length)
     }
 
     // search for recipes matching entered keywords
-    int *results = search_recipes(recipes, n_recipes, words, n_words, &n_results);
+    int *results = search_recipes(recipes, n_recipes, words, n_words);
 
 
     // print results
-    for (size_t i = 0; i < n_results; i++)
+    for (size_t i = 0; i < 20; i++)
     {
         printf("%d. %s\n    - %s\n", i + 1, recipes[results[i]].name, recipes[results[i]].url);
-
-        if (i >= 19)
-            break;
     }
 }
 

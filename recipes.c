@@ -45,7 +45,7 @@ char *toLowerCase(char *str)
     }
 }
 
-int *search_recipes(struct Recipe *recipes, int n_recipes, char *keywords[], int n_keywords, int *n_results)
+int *search_recipes(struct Recipe *recipes, int n_recipes, char *keywords[], int n_keywords)
 {
 
     int *points;
@@ -91,8 +91,6 @@ int *search_recipes(struct Recipe *recipes, int n_recipes, char *keywords[], int
             }
         }
     }
-
-    *n_results = i_results_sorted;
 
     return results_sorted;
 }
