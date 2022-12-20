@@ -149,7 +149,7 @@ json_object *load_parse_json_data(char *filename)
 
     // read json file
     fread(buffer, fsize, 1, fp);
-    fclose; // close file
+    fclose(fp); // close file
 
     // parse json
     recipes_array = json_tokener_parse(buffer);
