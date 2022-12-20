@@ -3,6 +3,8 @@
 #include <ctype.h>
 #include <json-c/json.h>
 
+#define MAX_KEYWORDS 100
+
 json_object *load_parse_json_data(char *filename);
 struct Ingredient *get_ingredients(struct json_object *ingredients_array);
 struct Recipe *get_recipes(char *filename, int *length);
@@ -40,7 +42,7 @@ void recipes_search(){
     int n_recipes;
     int n_words = 0;
     int n_results = 0;
-    char *words[100];
+    char *words[MAX_KEYWORDS];
     struct Recipe *recipes;
 
     printf("\n");
