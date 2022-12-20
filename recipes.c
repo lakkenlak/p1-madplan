@@ -82,7 +82,7 @@ int *search_recipes(struct Recipe *recipes, int n_recipes, char *keywords[], int
 
     for (int i = 1000; i >= 1; i--)
     {
-        for (size_t ii = 0; ii < n_recipes; ii++)
+        for (int ii = 0; ii < n_recipes; ii++)
         {
             if (points[ii] == i)
             {
@@ -104,13 +104,13 @@ void list_recipes(struct Recipe *recipes, int n_recipes)
 {
     printf("\n");
 
-    for (size_t i = 0; i < n_recipes; i++)
+    for (int i = 0; i < n_recipes; i++)
     {
         printf("%s:\n", recipes[i].name);
         printf("    url: %s\n", recipes[i].name);
         printf("    ingredients:\n");
 
-        for (size_t n = 0; n < recipes[i].n_ingredients; n++)
+        for (int n = 0; n < recipes[i].n_ingredients; n++)
         {
             printf("        %s\n", recipes[i].ingredients[n].name);
             printf("            amount: %f\n", recipes[i].ingredients[n].amount);
