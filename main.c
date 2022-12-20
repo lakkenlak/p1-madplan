@@ -111,35 +111,3 @@ void recipes_search_with_fridge(struct fridge_item fi[], int occupied_length)
         printf("%d. %s\n    - %s\n", i + 1, recipes[results[i]].name, recipes[results[i]].url);
     }
 }
-
-/*
-void recipes_search_with_fridge(struct fridge_item fi[], int occupied_length)
-{
-    int n_recipes;
-    int n_words = occupied_length;
-    int n_results = 0;
-    struct Recipe *recipes;
-    char words[100][30];
-
-    printf("\n");
-
-    // read contents from json recipe file
-    recipes = get_recipes("recipes.json", &n_recipes);
-
-    for(int p = 0; p < occupied_length; p++){
-        strcpy(words[p], fi[p].name);
-    }
-
-    // search for recipes matching entered keywords
-    int *results = search_recipes(recipes, n_recipes, words, n_words, &n_results);
-
-    // print results
-    for (size_t i = 0; i < n_results; i++)
-    {
-        printf("%d. %s\n    - %s\n", i + 1, recipes[results[i]].name, recipes[results[i]].url);
-
-        if (i >= 19)
-            break;
-    }
-}
-*/
