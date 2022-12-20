@@ -7,6 +7,7 @@ json_object *load_parse_json_data(char *filename);
 struct Ingredient *get_ingredients(struct json_object *ingredients_array);
 struct Recipe *get_recipes(char *filename, int *length);
 void list_recipes(struct Recipe *recipes, int n_recipes);
+int *search_recipes(struct Recipe *recipes, int n_recipes, char *keywords[], int n_keywords);
 
 struct Ingredient
 {
@@ -42,6 +43,46 @@ char *toLowerCase(char *str)
     for (int i = 0; str[i]; i++)
     {
         str[i] = tolower(str[i]);
+    }
+}
+
+void recipes_search()
+{
+    int n_recipes;
+    int n_words = 0;
+    int n_results = 0;
+    char *words[100];
+    struct Recipe *recipes;
+
+    printf("\n");
+
+    // read contents from json recipe file
+    recipes = get_recipes("recipes.json", &n_recipes);
+
+    // print instructions
+    printf("Enter a maximum of 100 keywords seperated by spaces, end with a \"q\":\n");
+
+    // read input keywords from user
+    for (int i = 0; i < 100; i++)
+    {
+        words[i] = malloc(sizeof(char) * 30);
+        scanf("%s", words[i]); // scan inputs
+
+        if (strcmp(words[i], "q") == 0)
+        {
+            break;
+        }
+
+        n_words++;
+    }
+
+    // search for recipes matching entered keywords
+    int *results = search_recipes(recipes, n_recipes, words, n_words);
+
+    // print results
+    for (int i = 0; i < 50; i++)
+    {
+        printf("%d. %s\n    - %s\n", i + 1, recipes[results[i]].name, recipes[results[i]].url);
     }
 }
 
