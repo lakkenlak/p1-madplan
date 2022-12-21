@@ -92,7 +92,8 @@ int print_refrigerator(struct fridge_item *fridge, int occupied_length){
 int add_food_to_refrigerator(struct fridge_item *fridge, int *occupied_length, int *total_length){
     struct fridge_item items[MAX_FOOD_ITEMS];
     int n_items = 0;
-    printf("Please enter the name of the ingredients you wish to add to the fridge, end with  \"q\"\n");
+    printf("Please enter the name of the ingredients you wish to add to the fridge, seperate them by newlines and
+    end with the letter \"q\"\n");
     for (int i = 0; i < MAX_FOOD_ITEMS; i++)
     {
         scanf(" %29[^\n]", items[i].name); 
