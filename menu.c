@@ -53,8 +53,8 @@ int print_main_menu(){
            "   1. See refrigerator \n"
            "   2. Add food \n"
            "   3. Remove food \n"
-           "   4. Search specific recipes \n"
-           "   5. Search fridge recipes \n"
+           "   4. Search recipes w/ specific ingredients \n"
+           "   5. Search recipes w/ fridge ingredients \n"
            "   6. Quit \n");
 
     int menu_selection = validate_menu_input(6);
